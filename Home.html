@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body style="height: 100%">
+    <div
+      style="
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: auto;
+        margin-bottom: auto;
+        flex-direction: column;
+        padding: 50px;
+      "
+    >
+      <div><h2>BNPL Calculator</h2></div>
+      <div class="col-lg-8 bg-success mt-5" style="border-radius: 20px">
+        <form>
+          <div class="row pt-5">
+            <div class="col-sm-6 form-group row">
+              <label for="Principal" class="h3 col-sm-4 col-form-label"
+                >Principal:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Principal"
+                  placeholder="Principal amount"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6 form-group row">
+              <label for="Interest" class="h3 col-sm-4 col-form-label"
+                >Interest:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Interest"
+                  placeholder="Interest rate in %"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row pt-5">
+            <div class="col-sm-6 form-group row justify-content-center">
+              <label for="Tensure" class="h3 col-sm-4 col-form-label"
+                >Tensure:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Tensure"
+                  placeholder="Tensure amount"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6 form-group row justify-content-center">
+              <label for="Disbursement" class="h3 col-sm-4 col-form-label"
+                >Date of Disbursement:</label
+              >
+              <div class="col-sm-8 justify-content-center">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="Disbursement"
+                  placeholder="Date of Disbursement in DD-MM-YYYY"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row justify-content-center">
+            <div class="col-sm-2">
+              <a
+                href="CalculationTable.html"
+                type="submit"
+                class="btn btn-primary"
+              >
+                <h5>Calculate</h5>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
