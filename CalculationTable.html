@@ -126,7 +126,7 @@
           var index = $("table tbody tr:last-child").index();
           var row =
             "<tr>" +
-            `<td><div class="justify-content-center"><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY"/></div></td>` +
+            `<td><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY" /></td>` +
             '<td><input  type="number" class="form-control repayAmount" id="RepaymentAmount" placeholder="Repayment Amount"/></td>' +
             '<td><input  type="number" id="penalPaid" placeholder="Penal Amount" readonly  class="readonly-fields"/></td>' +
             '<td><input  type="number" id="InterestPaid" placeholder="Interest Amount" readonly  class="readonly-fields"/></td>' +
@@ -134,7 +134,7 @@
             '<td><input  type="number" id="NetOutstandingPaid" placeholder="Net Amount" readonly  class="readonly-fields"/></td>' +
             '<td><input  type="number" id="extraPaid" placeholder="Extra Amount" readonly  class="readonly-fields"/></td>' +
             "<td>" +
-            actions +
+            '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
             "</td>" +
             "</tr>";
           $("table").append(row);
@@ -185,27 +185,135 @@
           $(this).parents("tr").remove();
           $(".add-new").removeAttr("disabled");
         });
+
+        function formatedDateFunction(givenDate) {
+          if (givenDate) {
+            let date = givenDate.split("-");
+            let formatedDate = date[1] + "/" + date[2] + "/" + date[0];
+
+            let date_1 = new Date(formatedDate); //MM/DD/2021
+            return date_1;
+          }
+          return;
+        }
+        const days = (date_1, date_2) => {
+          let difference = Math.abs(date_1 - date_2);
+          let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+          return TotalDays;
+        };
+        function insertCellValue(index, colNumber, value) {
+          var dataTable = $("table tbody");
+
+          dataTable[0].rows[index].cells[colNumber].innerHTML = value;
+        }
+        function amountCalculationPart(date, repaymentAmount) {
+          var index = $("table tbody tr:last-child").index();
+          // var PrincipalOS= sessionStorage.getItem("Principal");
+          var principalOS = sessionStorage.getItem("Principal") ?? 100; // Doubts in PrincipalOS callculations
+          var InterestPercentage = sessionStorage.getItem("Interest") * 0.01;
+          var gracePeriod = 0;
+          var Penal = 24;
+          var repayDate = new Date(formatedDateFunction(date));
+          var distributionDate = new Date(
+            formatedDateFunction(sessionStorage.getItem("Disbursement"))
+          );
+          var Days =
+            repayDate == distributionDate
+              ? 1
+              : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
+          var principalSettled = 0;
+          var InterestOS = Math.ceil(
+            (principalOS * InterestPercentage * Days) / 365,
+            2
+          );
+
+          var principalOSFromula = principalOS - principalSettled;
+
+          //penalOs -------------->
+          var calculation =
+            (principalOSFromula *
+              Penal *
+              0.01 *
+              days(
+                repayDate,
+                Math.max(
+                  (distributionDate + sessionStorage.getItem("Tensure"),
+                  repayDate)
+                )
+              )) /
+            365;
+          var PenalOS =
+            days(repayDate, distributionDate) >
+            sessionStorage.getItem("Tensure") + gracePeriod
+              ? calculation
+              : 0;
+
+          // Penalsettled-------->
+          var penalSettled = Math.min(repaymentAmount, PenalOS);
+          insertCellValue(index, 2, penalSettled);
+
+          // Interest Settled------------------->
+          var InterstSettled = Math.min(
+            repaymentAmount - penalSettled,
+            InterestOS
+          );
+          insertCellValue(index, 3, InterstSettled);
+
+          //Principal settled ----------------->
+          var PrincipalSettled = Math.min(
+            repaymentAmount - PenalOS - InterstSettled,
+            principalOS
+          );
+          insertCellValue(index, 4, PrincipalSettled);
+
+          //NetOutstanding ----------------->
+          var NetOutstanding =
+            principalOS +
+            InterestOS +
+            PenalOS -
+            penalSettled -
+            InterstSettled -
+            PrincipalSettled;
+          insertCellValue(index, 5, NetOutstanding);
+
+          // Extra paid -------------->
+          var extraPaid =
+            repaymentAmount - PenalOS - InterstSettled - PrincipalSettled;
+          insertCellValue(index, 6, extraPaid);
+        }
+
         // Date change in the date picker click
         $(document).on("change", ".datePicker", function () {
-          // $(this).parents("tr").remove();
-          // $(".add-new").removeAttr("disabled");
-          console.log("this value", $(this));
-          $(".add-new").removeAttr("disabled");
+          if (
+            $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
+          ) {
+            $(".add-new").removeAttr("disabled");
+            amountCalculationPart(
+              $(this).val(),
+              $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
+            );
+          } else {
+            $(".add-new").attr("disabled", "disabled");
+          }
           $(this).attr("disabled", "disabled");
         });
-        $(document).on("change", ".repayAmount", function () {
-          // $(this).parents("tr").remove();
-          // $(".add-new").removeAttr("disabled");
 
-          console.log("this value", $(this).val());
+        //repaymentAmount ---------->
+        $(document).on("change", ".repayAmount", function () {
+          var repaymentAmount = $(this).val();
+
+          if ($(this).parents("tr").find('input[type="date"]')[0].value) {
+            $(".add-new").removeAttr("disabled");
+            amountCalculationPart(
+              $(this).parents("tr").find('input[type="date"]')[0].value,
+              $(this).val()
+            );
+          } else {
+            $(".add-new").attr("disabled", "disabled");
+          }
+          $(this).attr("disabled", "disabled");
         });
       });
-      function datafunction() {
-        console.log(
-          "Disbursement",
-          document.getElementById("Disbursement").value
-        );
-      }
     </script>
   </head>
   <body class="col-lg-12">
