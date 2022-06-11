@@ -11,6 +11,24 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      function submitFunction() {
+        var Principal = document.getElementById("Principal").value;
+      //   sessionStorage.setItem(
+      //     "HomepageDetails",
+      //     JSON.stringify({ Principal })
+      //   );
+      // }
+      // var url = "./CalculationTable.html";
+      // history.push({}, "", url);
+      // $(document).ready(function () {
+      //   $(".submit").on("click", function () {
+      //     console.log("callcecec");
+      //     window.location.href =
+      //       "file:///E:/Upwork%20projects/BNPL%20calculator/CalculationTable.html";
+      //   });
+      // });
+    </script>
   </head>
 
   <body style="height: 100%">
@@ -28,7 +46,7 @@
     >
       <div><h2>BNPL Calculator</h2></div>
       <div class="col-lg-8 bg-success mt-5" style="border-radius: 20px">
-        <form>
+        <form action="CalculationTable.html">
           <div class="row pt-5">
             <div class="col-sm-6 form-group row">
               <label for="Principal" class="h3 col-sm-4 col-form-label"
@@ -39,6 +57,11 @@
                   type="number"
                   class="form-control"
                   id="Principal"
+                  required
+                  onChange="sessionStorage.setItem(
+                    'Principal',
+                    document.getElementById('Principal').value
+                  );"
                   placeholder="Principal amount"
                 />
               </div>
@@ -52,6 +75,11 @@
                   type="number"
                   class="form-control"
                   id="Interest"
+                  required
+                  onChange="sessionStorage.setItem(
+                    'Interest',
+                    document.getElementById('Interest').value
+                  );"
                   placeholder="Interest rate in %"
                 />
               </div>
@@ -67,6 +95,11 @@
                   type="number"
                   class="form-control"
                   id="Tensure"
+                  required
+                  onChange="sessionStorage.setItem(
+                    'Tensure',
+                    document.getElementById('Tensure').value
+                  );"
                   placeholder="Tensure amount"
                 />
               </div>
@@ -80,6 +113,11 @@
                   type="date"
                   class="form-control"
                   id="Disbursement"
+                  required="true"
+                  onChange="sessionStorage.setItem(
+                    'Disbursement',
+                    document.getElementById('Disbursement').value
+                  );"
                   placeholder="Date of Disbursement in DD-MM-YYYY"
                 />
               </div>
@@ -88,13 +126,14 @@
 
           <div class="form-group row justify-content-center">
             <div class="col-sm-2">
-              <a
-                href="CalculationTable.html"
+              <input
+                // href="CalculationTable.html"
                 type="submit"
-                class="btn btn-primary"
+                class="submit btn btn-primary"
+                value="Calculate"
               >
-                <h5>Calculate</h5>
-              </a>
+              
+              </input>
             </div>
           </div>
         </form>

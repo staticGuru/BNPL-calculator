@@ -1,4 +1,330 @@
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        color: #404e67;
+        background: #f5f7fa;
+        font-family: "Open Sans", sans-serif;
+      }
+      .table-wrapper {
+        width: auto;
+        margin: 30px auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      }
+      .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+      }
+      .table-title h2 {
+        margin: 6px 0 0;
+        font-size: 22px;
+      }
+      .table-title .add-new {
+        float: right;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12px;
+        text-shadow: none;
+        min-width: 100px;
+        border-radius: 50px;
+        line-height: 13px;
+      }
+      .table-title .add-new i {
+        margin-right: 4px;
+      }
+      table.table {
+        table-layout: fixed;
+      }
+      table.table tr th,
+      table.table tr td {
+        border-color: #e9e9e9;
+      }
+      table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      table.table th:last-child {
+        width: 100px;
+      }
+      table.table td a {
+        cursor: pointer;
+        display: inline-block;
+        margin: 0 5px;
+        min-width: 24px;
+      }
+      table.table td a.add {
+        color: #27c46b;
+      }
+      table.table td a.edit {
+        color: #ffc107;
+      }
+      table.table td a.delete {
+        color: #e34724;
+      }
+      table.table td i {
+        font-size: 19px;
+      }
+      table.table td a.add i {
+        font-size: 24px;
+        margin-right: -1px;
+        position: relative;
+        top: 3px;
+      }
+      table.table .form-control {
+        height: 32px;
+        line-height: 32px;
+        box-shadow: none;
+        border-radius: 2px;
+      }
+      table.table .form-control.error {
+        border-color: #f50000;
+      }
+      table.table td .add {
+        display: none;
+      }
+      .readonly-fields {
+        outline: none;
+        border: none;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        var actions = $("table td:last-child").html();
+        // Append table with add row form on add new button click
+        $(".add-new").click(function () {
+          $(this).attr("disabled", "disabled");
+          var index = $("table tbody tr:last-child").index();
+          var row =
+            "<tr>" +
+            `<td><div class="justify-content-center"><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY"/></div></td>` +
+            '<td><input  type="number" class="form-control repayAmount" id="RepaymentAmount" placeholder="Repayment Amount"/></td>' +
+            '<td><input  type="number" id="penalPaid" placeholder="Penal Amount" readonly  class="readonly-fields"/></td>' +
+            '<td><input  type="number" id="InterestPaid" placeholder="Interest Amount" readonly  class="readonly-fields"/></td>' +
+            '<td><input  type="number" id="PrincipalPaid" placeholder="Principal Amount" readonly  class="readonly-fields"/></td>' +
+            '<td><input  type="number" id="NetOutstandingPaid" placeholder="Net Amount" readonly  class="readonly-fields"/></td>' +
+            '<td><input  type="number" id="extraPaid" placeholder="Extra Amount" readonly  class="readonly-fields"/></td>' +
+            "<td>" +
+            actions +
+            "</td>" +
+            "</tr>";
+          $("table").append(row);
+          $("table tbody tr")
+            .eq(index + 1)
+            .find(".add, .edit")
+            .toggle();
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+        // Add row on add button click
+        $(document).on("click", ".add", function () {
+          var empty = false;
+          var input = $(this).parents("tr").find('input[type="number"]');
+          input.each(function () {
+            if (!$(this).val()) {
+              $(this).addClass("error");
+              empty = true;
+            } else {
+              $(this).removeClass("error");
+            }
+          });
+          $(this).parents("tr").find(".error").first().focus();
+          if (!empty) {
+            input.each(function () {
+              $(this).parent("td").html($(this).val());
+            });
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").removeAttr("disabled");
+          }
+        });
+        // Edit row on edit button click
+        $(document).on("click", ".edit", function () {
+          $(this)
+            .parents("tr")
+            .find("td:not(:last-child)")
+            .each(function () {
+              $(this).html(
+                '<input type="text" class="form-control" value="' +
+                  $(this).text() +
+                  '">'
+              );
+            });
+          $(this).parents("tr").find(".add, .edit").toggle();
+          $(".add-new").attr("disabled", "disabled");
+        });
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+          $(this).parents("tr").remove();
+          $(".add-new").removeAttr("disabled");
+        });
+        // Date change in the date picker click
+        $(document).on("change", ".datePicker", function () {
+          // $(this).parents("tr").remove();
+          // $(".add-new").removeAttr("disabled");
+          console.log("this value", $(this));
+          $(".add-new").removeAttr("disabled");
+          $(this).attr("disabled", "disabled");
+        });
+        $(document).on("change", ".repayAmount", function () {
+          // $(this).parents("tr").remove();
+          // $(".add-new").removeAttr("disabled");
+
+          console.log("this value", $(this).val());
+        });
+      });
+      function datafunction() {
+        console.log(
+          "Disbursement",
+          document.getElementById("Disbursement").value
+        );
+      }
+    </script>
+  </head>
+  <body class="col-lg-12">
+    <div class="table-responsive">
+      <div class="table-responsive">
+        <div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-sm-8">
+                <h2>Repayment <b>Details</b></h2>
+              </div>
+              <div class="col-sm-4">
+                <button type="button" class="btn btn-info add-new">
+                  <i class="fa fa-plus"></i> Add Row
+                </button>
+              </div>
+            </div>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Amount Paid</th>
+                <th>Penal Settled</th>
+                <th>Interest Settled</th>
+                <th>Principal Settled</th>
+                <th>Net Outstanding</th>
+                <th>Extra Paid</th>
+
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <td>
+                  <div class="justify-content-center">
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="Disbursement"
+                      onChange="datafunction()"
+                      placeholder="Date of Disbursement in DD-MM-YYYY"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control repayAmount"
+                    id="RepaymentAmount"
+                    placeholder="Repayment Amount"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="extraPaid"
+                    value=""
+                    placeholder="Extra Amount"
+                    readonly
+                    class="readonly-fields"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="extraPaid"
+                    value=""
+                    placeholder="Extra Amount"
+                    readonly
+                    class="readonly-fields"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="extraPaid"
+                    value=""
+                    placeholder="Extra Amount"
+                    readonly
+                    class="readonly-fields"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="extraPaid"
+                    value=""
+                    placeholder="Extra Amount"
+                    readonly
+                    class="readonly-fields"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="extraPaid"
+                    value=""
+                    placeholder="Extra Amount"
+                    readonly
+                    class="readonly-fields"
+                  />
+                </td>
+
+                <td>
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -8,6 +334,10 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -46,22 +376,34 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
+            <th scope="row">
+              <i
+                class="fa fa-trash-o"
+                style="color: red"
+                onclick="myDeleteFunction()"
+              ></i>
+            </th>
+            <td>
+              <div class="justify-content-center">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="Disbursement"
+                  placeholder="Date of Disbursement in DD-MM-YYYY"
+                />
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Principal"
+                  placeholder="Principal amount"
+                />
+              </div>
+            </td>
             <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
           </tr>
         </tbody>
       </table>
@@ -81,4 +423,4 @@
       }
     </script>
   </body>
-</html>
+</html> -->
