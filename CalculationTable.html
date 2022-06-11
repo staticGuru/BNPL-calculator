@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <title>Repayment Details</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
@@ -29,14 +29,18 @@
     <style>
       body {
         color: #404e67;
+        height: 100%;
         background: #f5f7fa;
+        background-color: #dff6ff;
         font-family: "Open Sans", sans-serif;
       }
+
       .table-wrapper {
         width: auto;
         margin: 30px auto;
-        background: #fff;
+        background: rgb(255, 255, 255);
         padding: 20px;
+        border-radius: 20px;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
       }
       .table-title {
@@ -60,6 +64,7 @@
       .table-title .add-new i {
         margin-right: 4px;
       }
+
       table.table {
         table-layout: fixed;
       }
@@ -326,7 +331,7 @@
                 <h2>Repayment <b>Details</b></h2>
               </div>
               <div class="col-sm-4">
-                <button type="button" class="btn btn-info add-new">
+                <button type="button" class="btn btn-info add-new bg-success">
                   <i class="fa fa-plus"></i> Add Row
                 </button>
               </div>
