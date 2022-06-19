@@ -1,983 +1,994 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BNPL Calculator</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <style>
-      body {
-        height: 100%;
-        background-color: #dff6ff;
-      }
-      .outerDiv {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: auto;
-        margin-bottom: auto;
-        flex-direction: column;
-        padding: 50px;
-      }
-      .card {
-        border-radius: 20px;
-        background-color: #47b5ffbd;
-      }
-      .col-form-label {
-        color: #000000 !important;
-        font-weight: bold;
-      }
-      .title {
-        font-weight: bold;
-      }
-    </style>
-    <style>
-      body {
-        color: #404e67;
-        height: 100%;
-        background: #f5f7fa;
-        background-color: #dff6ff;
-        font-family: "Open Sans", sans-serif;
-      }
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>BNPL Calculator</title>
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+         crossorigin="anonymous"
+         />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
+         />
+      <link
+         rel="stylesheet"
+         href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+         />
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+         />
+      <link
+         rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+         />
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+      <style>
+         body {
+         height: 100%;
+         background-color: #dff6ff;
+         }
+         .outerDiv {
+         height: 100%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         margin-top: auto;
+         margin-bottom: auto;
+         flex-direction: column;
+         padding: 50px;
+         }
+         .card {
+         border-radius: 20px;
+         background-color: #47b5ffbd;
+         }
+         .col-form-label {
+         color: #000000 !important;
+         font-weight: bold;
+         }
+         .title {
+         font-weight: bold;
+         }
+      </style>
+      <style>
+         body {
+         color: #404e67;
+         height: 100%;
+         background: #f5f7fa;
+         background-color: #dff6ff;
+         font-family: "Open Sans", sans-serif;
+         }
+         .table-wrapper {
+         width: auto;
+         margin: 30px auto;
+         background: rgb(255, 255, 255);
+         padding: 20px;
+         border-radius: 20px;
+         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+         }
+         .table-title {
+         padding-bottom: 10px;
+         margin: 0 0 10px;
+         }
+         .table-title h2 {
+         margin: 6px 0 0;
+         font-size: 22px;
+         }
+         .table-title .add-new {
+         float: right;
+         height: 30px;
+         font-weight: bold;
+         font-size: 12px;
+         text-shadow: none;
+         min-width: 100px;
+         border-radius: 50px;
+         line-height: 13px;
+         }
+         .table-title .add-new i {
+         margin-right: 4px;
+         }
+         table.table {
+         table-layout: fixed;
+         }
+         table.table tr th,
+         table.table tr td {
+         border-color: #e9e9e9;
+         }
+         table.table th i {
+         font-size: 13px;
+         margin: 0 5px;
+         cursor: pointer;
+         }
+         table.table th:last-child {
+         width: 100px;
+         }
+         table.table td a {
+         cursor: pointer;
+         display: inline-block;
+         margin: 0 5px;
+         min-width: 24px;
+         }
+         table.table td a.add {
+         color: #27c46b;
+         }
+         table.table td a.edit {
+         color: #ffc107;
+         }
+         table.table td a.delete {
+         color: #e34724;
+         }
+         table.table td i {
+         font-size: 19px;
+         }
+         table.table td a.add i {
+         font-size: 24px;
+         margin-right: -1px;
+         position: relative;
+         top: 3px;
+         }
+         table.table .form-control {
+         height: 32px;
+         line-height: 32px;
+         box-shadow: none;
+         border-radius: 2px;
+         }
+         table.table .form-control.error {
+         border-color: #f50000;
+         }
+         table.table td .add {
+         display: none;
+         }
+         .readonly-fields {
+         outline: none;
+         border: none;
+         }
+      </style>
+      <script>
+         var totalPrincipalOutstanding =100;
+         var totalPrincipalSettled =0;
 
-      .table-wrapper {
-        width: auto;
-        margin: 30px auto;
-        background: rgb(255, 255, 255);
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-      }
-      .table-title {
-        padding-bottom: 10px;
-        margin: 0 0 10px;
-      }
-      .table-title h2 {
-        margin: 6px 0 0;
-        font-size: 22px;
-      }
-      .table-title .add-new {
-        float: right;
-        height: 30px;
-        font-weight: bold;
-        font-size: 12px;
-        text-shadow: none;
-        min-width: 100px;
-        border-radius: 50px;
-        line-height: 13px;
-      }
-      .table-title .add-new i {
-        margin-right: 4px;
-      }
+         function formatedDateFunction(givenDate) {
+             if (givenDate) {
+               let date = givenDate.split("-");
+               let formatedDate = date[1] + "/" + date[2] + "/" + date[0];
+         
+               let date_1 = formatedDate.toString(); //MM/DD/2021
+               return date_1;
+             }
+             return;
+           }
+           const days = (date_1, date_2) => {
+             let difference = (date_1 - date_2);
+             let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+             return TotalDays;
+           };
+           function insertCellValue(index, colNumber, value) {
+             var dataTable = $("table tbody");
+         
+             dataTable[0].rows[index].cells[colNumber].innerHTML = value;
+           }
+           function insertTableValue(obj,index){
+            console.log(`penalPaid${index}`,`penalPaid+${index}`,obj)
+            document.getElementById(`penalPaid${index}`).value =obj.penalSettled;
+            document.getElementById(`InterestPaid${index}`).value =obj.InterstSettled;
+            document.getElementById(`PrincipalPaid${index}`).value =obj.PrincipalSettled;
+            document.getElementById(`NetOutstandingPaid${index}`).value =obj.NetOutstanding;
+            document.getElementById(`extraPaid${index}`).value =obj.extraPaid;
 
-      table.table {
-        table-layout: fixed;
-      }
-      table.table tr th,
-      table.table tr td {
-        border-color: #e9e9e9;
-      }
-      table.table th i {
-        font-size: 13px;
-        margin: 0 5px;
-        cursor: pointer;
-      }
-      table.table th:last-child {
-        width: 100px;
-      }
-      table.table td a {
-        cursor: pointer;
-        display: inline-block;
-        margin: 0 5px;
-        min-width: 24px;
-      }
-      table.table td a.add {
-        color: #27c46b;
-      }
-      table.table td a.edit {
-        color: #ffc107;
-      }
-      table.table td a.delete {
-        color: #e34724;
-      }
-      table.table td i {
-        font-size: 19px;
-      }
-      table.table td a.add i {
-        font-size: 24px;
-        margin-right: -1px;
-        position: relative;
-        top: 3px;
-      }
-      table.table .form-control {
-        height: 32px;
-        line-height: 32px;
-        box-shadow: none;
-        border-radius: 2px;
-      }
-      table.table .form-control.error {
-        border-color: #f50000;
-      }
-      table.table td .add {
-        display: none;
-      }
-      .readonly-fields {
-        outline: none;
-        border: none;
-      }
-    </style>
-    <script>
-      var totalPrincipalOutstanding =100;
-      var totalPrincipalSettled =0;
-      function formatedDateFunction(givenDate) {
-          if (givenDate) {
-            let date = givenDate.split("-");
-            let formatedDate = date[1] + "/" + date[2] + "/" + date[0];
+           }
+           function amountCalculationExistPart(date, repaymentAmount,index) {
+             // var PrincipalOS= sessionStorage.getItem("Principal");
+             var principalOS =0;
+             var calculatedObject={};
+            //  if(totalPrincipalOutstanding ===0){
+            //    principalOS =(sessionStorage.getItem("Principal") ?? 100)-totalPrincipalSettled; // Doubts in PrincipalOS callculations
+            //    totalPrincipalOutstanding =principalOS;
+            //  }else{
+               principalOS = totalPrincipalOutstanding-totalPrincipalSettled;
+               totalPrincipalOutstanding =principalOS ==0?0:principalOS;
+            //  }
+            // var dataTable = $("table tbody");
 
-            let date_1 = formatedDate.toString(); //MM/DD/2021
-            return date_1;
-          }
-          return;
-        }
-        const days = (date_1, date_2) => {
-          let difference = Math.abs(date_1 - date_2);
-          let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
-          return TotalDays;
-        };
-        function insertCellValue(index, colNumber, value) {
-          var dataTable = $("table tbody");
+             var InterestPercentage = sessionStorage.getItem("Interest") * 0.01;
+             var gracePeriod = 0;
+             var Penal = 24;
+             var repayDate = new Date(formatedDateFunction(date));
+             var distributionDate = new Date(
+               formatedDateFunction(sessionStorage.getItem("Disbursement"))
+             );
+             var Days =
+               repayDate == distributionDate
+                 ? 1
+                 : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
+             var principalSettled = 0;
+             var InterestOS1 =(principalOS * InterestPercentage * Days) / 365;
+             var InterestOS=parseFloat(InterestOS1.toFixed(2));
 
-          dataTable[0].rows[index].cells[colNumber].innerHTML = value;
-        }
-        function amountCalculationExistPart(date, repaymentAmount,index) {
-    
-          // var PrincipalOS= sessionStorage.getItem("Principal");
-          var principalOS =0;
-          if(totalPrincipalOutstanding ===0){
-            principalOS =(sessionStorage.getItem("Principal") ?? 100)-totalPrincipalSettled; // Doubts in PrincipalOS callculations
-            totalPrincipalOutstanding =principalOS;
-          }else{
-            principalOS = totalPrincipalOutstanding-totalPrincipalSettled;
-            totalPrincipalOutstanding =principalOS;
-          }
-          
-          var InterestPercentage = sessionStorage.getItem("Interest") * 0.01;
-          var gracePeriod = 0;
-          var Penal = 24;
-          var repayDate = new Date(formatedDateFunction(date));
-          var distributionDate = new Date(
-            formatedDateFunction(sessionStorage.getItem("Disbursement"))
-          );
-          var Days =
-            repayDate == distributionDate
-              ? 1
-              : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
-          var principalSettled = 0;
-          var InterestOS = Math.ceil(
-            (principalOS * InterestPercentage * Days) / 365,
-            2
-          );
+             var principalOSFromula = principalOS - principalSettled;
+         
+             //penalOs -------------->
+             var calculation =
+               (principalOSFromula *
+                 Penal *
+                 0.01 *
+                 days(
+                   repayDate,
+                   Math.max(
+                     (distributionDate + sessionStorage.getItem("Tensure"),
+                     repayDate)
+                   )
+                 )) /
+               365;
+             var PenalOS =
+               days(repayDate, distributionDate) >
+               sessionStorage.getItem("Tensure") + gracePeriod
+                 ? calculation
+                 : 0;
+         
+             // Penalsettled-------->
+             var penalSettled = Math.min(repaymentAmount, PenalOS);
+            //  insertCellValue(index, 2, penalSettled);
+             calculatedObject["penalSettled"]=penalSettled;
+          //  document.getElementsByClassName("penalPaid1").value=8;
+         
+             // Interest Settled------------------->
+             var InterstSettled = Math.min(
+               repaymentAmount - penalSettled,
+               InterestOS
+             );
+            //  insertCellValue(index, 3, InterstSettled);
+             calculatedObject["InterstSettled"]=InterstSettled;
+             //Principal settled ----------------->
+             var PrincipalSettled = Math.min(
+               repaymentAmount - PenalOS - InterstSettled,
+               principalOS
+             );
+             totalPrincipalSettled =parseFloat(PrincipalSettled.toFixed(2));
+            //  insertCellValue(index, 4, parseFloat(PrincipalSettled.toFixed(2)));
+             calculatedObject["PrincipalSettled"]=parseFloat(PrincipalSettled.toFixed(2));
 
-          var principalOSFromula = principalOS - principalSettled;
+             //NetOutstanding ----------------->
+             var NetOutstanding =
+               principalOS +
+               InterestOS +
+               PenalOS -
+               penalSettled -
+               InterstSettled -
+               PrincipalSettled;
+            //  insertCellValue(index, 5, parseFloat(NetOutstanding.toFixed(2)));
+             calculatedObject["NetOutstanding"]=parseFloat(NetOutstanding.toFixed(2));
 
-          //penalOs -------------->
-          var calculation =
-            (principalOSFromula *
-              Penal *
-              0.01 *
-              days(
-                repayDate,
-                Math.max(
-                  (distributionDate + sessionStorage.getItem("Tensure"),
-                  repayDate)
-                )
-              )) /
-            365;
-          var PenalOS =
-            days(repayDate, distributionDate) >
-            sessionStorage.getItem("Tensure") + gracePeriod
-              ? calculation
-              : 0;
+             // Extra paid -------------->
+             var extraPaid =
+               parseFloat((repaymentAmount - PenalOS - InterstSettled - PrincipalSettled).toFixed(2));
+            //  insertCellValue(index, 6, extraPaid);
+             calculatedObject["extraPaid"]=extraPaid;
 
-          // Penalsettled-------->
-          var penalSettled = Math.min(repaymentAmount, PenalOS);
-          insertCellValue(index, 2, penalSettled);
-        document.getElementsByClassName("penalPaid1").value=8;
+             return calculatedObject;
 
-          // Interest Settled------------------->
-          var InterstSettled = Math.min(
-            repaymentAmount - penalSettled,
-            InterestOS
-          );
-          insertCellValue(index, 3, InterstSettled);
+           }
+         $(document).ready(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+           var actions = $("table td:last-child").html();
+           // Append table with add row form on add new button click
+           $(".add-new").click(function () {
+             $(this).attr("disabled", "disabled");
+             var index = $("table tbody tr:last-child").index();
+             var row =
+               "<tr>" +
+               `<td><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY" /></td>` +
+               '<td><input  type="number" class="form-control repayAmount" id="RepaymentAmount" placeholder="Repayment Amount"/></td>' +
+               '<td><input  type="number" id="penalPaid" placeholder="Penal Amount" readonly  class="readonly-fields"/></td>' +
+               '<td><input  type="number" id="InterestPaid" placeholder="Interest Amount" readonly  class="readonly-fields"/></td>' +
+               '<td><input  type="number" id="PrincipalPaid" placeholder="Principal Amount" readonly  class="readonly-fields"/></td>' +
+               '<td><input  type="number" id="NetOutstandingPaid" placeholder="Net Amount" readonly  class="readonly-fields"/></td>' +
+               '<td><input  type="number" id="extraPaid" placeholder="Extra Amount" readonly  class="readonly-fields"/></td>' +
+               "<td>" +
+               '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
+               "</td>" +
+               "</tr>";
+             $("table").append(row);
+             $("table tbody tr")
+               .eq(index + 1)
+               .find(".add, .edit")
+               .toggle();
+             $('[data-toggle="tooltip"]').tooltip();
+           });
+           // Add row on add button click
+           $(document).on("click", ".add", function () {
+             var empty = false;
+             var input = $(this).parents("tr").find('input[type="number"]');
+             input.each(function () {
+               if (!$(this).val()) {
+                 $(this).addClass("error");
+                 empty = true;
+               } else {
+                 $(this).removeClass("error");
+               }
+             });
+             $(this).parents("tr").find(".error").first().focus();
+             if (!empty) {
+               input.each(function () {
+                 $(this).parent("td").html($(this).val());
+               });
+               $(this).parents("tr").find(".add, .edit").toggle();
+               $(".add-new").removeAttr("disabled");
+             }
+           });
+           // Edit row on edit button click
+           $(document).on("click", ".edit", function () {
+             $(this)
+               .parents("tr")
+               .find("td:not(:last-child)")
+               .each(function () {
+                 $(this).html(
+                   '<input type="text" class="form-control" value="' +
+                     $(this).text() +
+                     '">'
+                 );
+               });
+             $(this).parents("tr").find(".add, .edit").toggle();
+             $(".add-new").attr("disabled", "disabled");
+           });
+           // Delete row on delete button click
+           $(document).on("click", ".delete", function () {
+             $(this).parents("tr").remove();
+             $(".add-new").removeAttr("disabled");
+           });
+         
+           
+           function amountCalculationPart(date, repaymentAmount) {
+             var index = $("table tbody tr:last-child").index();
+             // var PrincipalOS= sessionStorage.getItem("Principal");
+             var principalOS =0;
+            //  if(totalPrincipalOutstanding ===0){
+            //    principalOS =(sessionStorage.getItem("Principal") ?? 100)-totalPrincipalSettled; // Doubts in PrincipalOS callculations
+            //    totalPrincipalOutstanding =principalOS;
+            //  }else{
+               principalOS = totalPrincipalOutstanding-totalPrincipalSettled;
+               totalPrincipalOutstanding =principalOS ==0?0:principalOS;
+            //  }
+             var InterestPercentage = sessionStorage.getItem("Interest") * 0.01;
+             var gracePeriod = 0;
+             var Penal = 24;
+             var repayDate = new Date(formatedDateFunction(date));
+             var distributionDate = new Date(
+               formatedDateFunction(sessionStorage.getItem("Disbursement"))
+             );
+             var Days =
+               repayDate == distributionDate
+                 ? 1
+                 : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
+             var principalSettled = 0;
+             var InterestOS1 =(principalOS * InterestPercentage * Days) / 365;
+             var InterestOS=parseFloat(InterestOS1.toFixed(2));
+         
+             var principalOSFromula = principalOS - principalSettled;
+         
+             //penalOs -------------->
+             var calculation =
+               (principalOSFromula *
+                 Penal *
+                 0.01 *
+                 days(
+                   repayDate,
+                   Math.max(
+                     (distributionDate + sessionStorage.getItem("Tensure"),
+                     repayDate)
+                   )
+                 )) /
+               365;
+             var PenalOS =
+               days(repayDate, distributionDate) >
+               sessionStorage.getItem("Tensure") + gracePeriod
+                 ? calculation
+                 : 0;
+         
+             // Penalsettled-------->
+             var penalSettled = Math.min(repaymentAmount, PenalOS);
+             insertCellValue(index, 2, penalSettled);
+         
+             // Interest Settled------------------->
+             var InterstSettled = Math.min(
+               repaymentAmount - penalSettled,
+               InterestOS
+             );
+             insertCellValue(index, 3, InterstSettled);
+         
+             //Principal settled ----------------->
+             var PrincipalSettled = Math.min(
+               repaymentAmount - PenalOS - InterstSettled,
+               principalOS
+             );
+             totalPrincipalSettled =parseFloat(PrincipalSettled.toFixed(2));
+             insertCellValue(index, 4, PrincipalSettled);
+         
+             //NetOutstanding ----------------->
+             var NetOutstanding =
+               principalOS +
+               InterestOS +
+               PenalOS -
+               penalSettled -
+               InterstSettled -
+               PrincipalSettled;
+             insertCellValue(index, 5, parseFloat(NetOutstanding.toFixed(2)));
+         
+             // Extra paid -------------->
+             var extraPaid =
+               repaymentAmount - PenalOS - InterstSettled - PrincipalSettled;
+             insertCellValue(index, 6, parseFloat(extraPaid.toFixed(2)));
+           }
+         
+           // Date change in the date picker click
+           $(document).on("change", ".datePicker", function () {
+             if (
+               $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
+             ) {
+               $(".add-new").removeAttr("disabled");
+               amountCalculationPart(
+                 $(this).val(),
+                 $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
+               );
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+         
+           //repaymentAmount ---------->
+           $(document).on("change", ".repayAmount", function () {
+             // var repaymentAmount = $(this).val();
+         
+             if ($(this).parents("tr").find('input[type="date"]')[0].value) {
+               $(".add-new").removeAttr("disabled");
+               amountCalculationPart(
+                 $(this).parents("tr").find('input[type="date"]')[0].value,
+                 $(this).val()
+               );
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+           $(document).on("change", ".repayAmount1", function () {
+             // var repaymentAmount = $(this).val();
+             if (document.getElementById("Disbursement1").value) {
+              var item= document.getElementById("RepaymentAmount1");
+              console.log("indexx",$("table tbody"));
+ totalPrincipalOutstanding =100;
+               totalPrincipalSettled =0;
+               console.log("indexx",$("table tbody").index(item));
+              let calculatedObj = amountCalculationExistPart(
+                 document.getElementById("Disbursement1").value,
+                 $(this).val(),
+                 $(this).index()
+               );
+               insertTableValue(calculatedObj,1);
+               console.log("calculatedObj",calculatedObj)
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+           $(document).on("change", ".repayAmount2", function () {
+             // var repaymentAmount = $(this).val();
+             if (document.getElementById("Disbursement2").value) {
+               // $(".add-new").removeAttr("disabled");
+              let calculatedObj= amountCalculationExistPart(
+                 document.getElementById("Disbursement2").value,
+                 $(this).val(),
+                 $(this).index()
+               );
+               insertTableValue(calculatedObj,2);
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+           $(document).on("change", ".repayAmount3", function () {
+             // var repaymentAmount = $(this).val();
+             if (document.getElementById("Disbursement3").value) {
+               // $(".add-new").removeAttr("disabled");
+               let calculatedObj=amountCalculationExistPart(
+                 document.getElementById("Disbursement3").value,
+                 $(this).val(),
+                 $(this).index()
+               );
+               insertTableValue(calculatedObj,3);
 
-          //Principal settled ----------------->
-          var PrincipalSettled = Math.min(
-            repaymentAmount - PenalOS - InterstSettled,
-            principalOS
-          );
-          totalPrincipalSettled =PrincipalSettled;
-          insertCellValue(index, 4, PrincipalSettled);
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+           $(document).on("change", ".date1", function () {
+             if (document.getElementById("RepaymentAmount1").value) {
+              totalPrincipalOutstanding =100;
+               totalPrincipalSettled =0;
+               let calculatedObj=amountCalculationExistPart(
+                 $(this).val(),
+                 document.getElementById("RepaymentAmount1").value,
+                 0
+               );
+               insertTableValue(calculatedObj,1);
 
-          //NetOutstanding ----------------->
-          var NetOutstanding =
-            principalOS +
-            InterestOS +
-            PenalOS -
-            penalSettled -
-            InterstSettled -
-            PrincipalSettled;
-          insertCellValue(index, 5, NetOutstanding);
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+           $(document).on("change", ".date2", function () {
+             // var repaymentAmount = $(this).val();
+             if (document.getElementById("RepaymentAmount2").value) {
+               // $(".add-new").removeAttr("disabled");
+              let calculatedObj= amountCalculationExistPart(
+                 $(this).val(),
+                 document.getElementById("RepaymentAmount2").value,
+                 1
+               );
+               insertTableValue(calculatedObj,2);
 
-          // Extra paid -------------->
-          var extraPaid =
-            repaymentAmount - PenalOS - InterstSettled - PrincipalSettled;
-          insertCellValue(index, 6, extraPaid);
-        }
-      $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-        var actions = $("table td:last-child").html();
-        // Append table with add row form on add new button click
-        $(".add-new").click(function () {
-          $(this).attr("disabled", "disabled");
-          var index = $("table tbody tr:last-child").index();
-          var row =
-            "<tr>" +
-            `<td><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY" /></td>` +
-            '<td><input  type="number" class="form-control repayAmount" id="RepaymentAmount" placeholder="Repayment Amount"/></td>' +
-            '<td><input  type="number" id="penalPaid" placeholder="Penal Amount" readonly  class="readonly-fields"/></td>' +
-            '<td><input  type="number" id="InterestPaid" placeholder="Interest Amount" readonly  class="readonly-fields"/></td>' +
-            '<td><input  type="number" id="PrincipalPaid" placeholder="Principal Amount" readonly  class="readonly-fields"/></td>' +
-            '<td><input  type="number" id="NetOutstandingPaid" placeholder="Net Amount" readonly  class="readonly-fields"/></td>' +
-            '<td><input  type="number" id="extraPaid" placeholder="Extra Amount" readonly  class="readonly-fields"/></td>' +
-            "<td>" +
-            '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
-            "</td>" +
-            "</tr>";
-          $("table").append(row);
-          $("table tbody tr")
-            .eq(index + 1)
-            .find(".add, .edit")
-            .toggle();
-          $('[data-toggle="tooltip"]').tooltip();
-        });
-        // Add row on add button click
-        $(document).on("click", ".add", function () {
-          var empty = false;
-          var input = $(this).parents("tr").find('input[type="number"]');
-          input.each(function () {
-            if (!$(this).val()) {
-              $(this).addClass("error");
-              empty = true;
-            } else {
-              $(this).removeClass("error");
-            }
-          });
-          $(this).parents("tr").find(".error").first().focus();
-          if (!empty) {
-            input.each(function () {
-              $(this).parent("td").html($(this).val());
-            });
-            $(this).parents("tr").find(".add, .edit").toggle();
-            $(".add-new").removeAttr("disabled");
-          }
-        });
-        // Edit row on edit button click
-        $(document).on("click", ".edit", function () {
-          $(this)
-            .parents("tr")
-            .find("td:not(:last-child)")
-            .each(function () {
-              $(this).html(
-                '<input type="text" class="form-control" value="' +
-                  $(this).text() +
-                  '">'
-              );
-            });
-          $(this).parents("tr").find(".add, .edit").toggle();
-          $(".add-new").attr("disabled", "disabled");
-        });
-        // Delete row on delete button click
-        $(document).on("click", ".delete", function () {
-          $(this).parents("tr").remove();
-          $(".add-new").removeAttr("disabled");
-        });
+             } else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+           $(document).on("change", ".date3", function () {
+             if (document.getElementById("RepaymentAmount3").value) {
+              let calculatedObj= amountCalculationExistPart(
+                 $(this).val(),
+                 document.getElementById("RepaymentAmount3").value,
+               2
+               );
+               insertTableValue(calculatedObj,3);
 
-        
-        function amountCalculationPart(date, repaymentAmount) {
-          var index = $("table tbody tr:last-child").index();
-          // var PrincipalOS= sessionStorage.getItem("Principal");
-          var principalOS =0;
-          if(totalPrincipalOutstanding ===0){
-            principalOS =(sessionStorage.getItem("Principal") ?? 100)-totalPrincipalSettled; // Doubts in PrincipalOS callculations
-            totalPrincipalOutstanding =principalOS;
-          }else{
-            principalOS = totalPrincipalOutstanding-totalPrincipalSettled;
-            totalPrincipalOutstanding =principalOS;
-          }
-          var InterestPercentage = sessionStorage.getItem("Interest") * 0.01;
-          var gracePeriod = 0;
-          var Penal = 24;
-          var repayDate = new Date(formatedDateFunction(date));
-          var distributionDate = new Date(
-            formatedDateFunction(sessionStorage.getItem("Disbursement"))
-          );
-          var Days =
-            repayDate == distributionDate
-              ? 1
-              : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
-          var principalSettled = 0;
-          var InterestOS = Math.ceil(
-            (principalOS * InterestPercentage * Days) / 365,
-            2
-          );
-
-          var principalOSFromula = principalOS - principalSettled;
-
-          //penalOs -------------->
-          var calculation =
-            (principalOSFromula *
-              Penal *
-              0.01 *
-              days(
-                repayDate,
-                Math.max(
-                  (distributionDate + sessionStorage.getItem("Tensure"),
-                  repayDate)
-                )
-              )) /
-            365;
-          var PenalOS =
-            days(repayDate, distributionDate) >
-            sessionStorage.getItem("Tensure") + gracePeriod
-              ? calculation
-              : 0;
-
-          // Penalsettled-------->
-          var penalSettled = Math.min(repaymentAmount, PenalOS);
-          insertCellValue(index, 2, penalSettled);
-
-          // Interest Settled------------------->
-          var InterstSettled = Math.min(
-            repaymentAmount - penalSettled,
-            InterestOS
-          );
-          insertCellValue(index, 3, InterstSettled);
-
-          //Principal settled ----------------->
-          var PrincipalSettled = Math.min(
-            repaymentAmount - PenalOS - InterstSettled,
-            principalOS
-          );
-          totalPrincipalSettled =PrincipalSettled;
-          insertCellValue(index, 4, PrincipalSettled);
-
-          //NetOutstanding ----------------->
-          var NetOutstanding =
-            principalOS +
-            InterestOS +
-            PenalOS -
-            penalSettled -
-            InterstSettled -
-            PrincipalSettled;
-          insertCellValue(index, 5, NetOutstanding);
-
-          // Extra paid -------------->
-          var extraPaid =
-            repaymentAmount - PenalOS - InterstSettled - PrincipalSettled;
-          insertCellValue(index, 6, extraPaid);
-        }
-
-        // Date change in the date picker click
-        $(document).on("change", ".datePicker", function () {
-          if (
-            $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
-          ) {
-            $(".add-new").removeAttr("disabled");
-            amountCalculationPart(
-              $(this).val(),
-              $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-
-        //repaymentAmount ---------->
-        $(document).on("change", ".repayAmount", function () {
-          // var repaymentAmount = $(this).val();
-
-          if ($(this).parents("tr").find('input[type="date"]')[0].value) {
-            $(".add-new").removeAttr("disabled");
-            amountCalculationPart(
-              $(this).parents("tr").find('input[type="date"]')[0].value,
-              $(this).val()
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-        $(document).on("change", ".repayAmount1", function () {
-          // var repaymentAmount = $(this).val();
-          if (document.getElementById("Disbursement1").value) {
-            // $(".add-new").removeAttr("disabled");
-            amountCalculationExistPart(
-              document.getElementById("Disbursement1").value,
-              $(this).val(),
-              0
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-        $(document).on("change", ".repayAmount2", function () {
-          // var repaymentAmount = $(this).val();
-          if (document.getElementById("Disbursement2").value) {
-            // $(".add-new").removeAttr("disabled");
-            amountCalculationExistPart(
-              document.getElementById("Disbursement2").value,
-              $(this).val(),
-              1
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-        $(document).on("change", ".repayAmount3", function () {
-          // var repaymentAmount = $(this).val();
-          if (document.getElementById("Disbursement3").value) {
-            // $(".add-new").removeAttr("disabled");
-            amountCalculationExistPart(
-              document.getElementById("Disbursement3").value,
-              $(this).val(),
-              2
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-        $(document).on("change", ".date1", function () {
-          if (document.getElementById("RepaymentAmount1").value) {
-            amountCalculationExistPart(
-              $(this).val(),
-              document.getElementById("RepaymentAmount1").value,
-              0
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-        $(document).on("change", ".date2", function () {
-          // var repaymentAmount = $(this).val();
-          if (document.getElementById("RepaymentAmount2").value) {
-            // $(".add-new").removeAttr("disabled");
-            amountCalculationExistPart(
-              $(this).val(),
-              document.getElementById("RepaymentAmount2").value,
-              1
-            );
-          } else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-        $(document).on("change", ".date3", function () {
-          if (document.getElementById("RepaymentAmount3").value) {
-            amountCalculationExistPart(
-              $(this).val(),
-              document.getElementById("RepaymentAmount3").value,
-              2
-            );
-          } 
-          else {
-            $(".add-new").attr("disabled", "disabled");
-          }
-          // $(this).attr("disabled", "disabled");
-        });
-      });
-
-
-      function showTable() {
-     document.getElementById("calculationTable").style.display = "block";
-        Date.prototype.addDays = function(days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
-let storedate = sessionStorage.getItem("Disbursement")?.split("-");
-            let formatedDate = storedate[1] + "/" + storedate[2] + "/" + storedate[0];
-var date = new Date(formatedDate);
-document.getElementById("Disbursement1").valueAsDate = date.addDays(14);
-document.getElementById("Disbursement2").valueAsDate = date.addDays(30);
-document.getElementById("Disbursement3").valueAsDate = date.addDays(45);
-document.getElementById("RepaymentAmount1").value = sessionStorage.getItem("Principal")*0.25;
-document.getElementById("RepaymentAmount2").value = sessionStorage.getItem("Principal")*0.50;
-document.getElementById("RepaymentAmount3").value = sessionStorage.getItem("Principal")*0.75;
-var principalInput=document.getElementById("Principal");
-var interestInput = document.getElementById("Interest");
-var tensureInput = document.getElementById("Tensure");
-var disbursementInput = document.getElementById("Disbursement");
-var submitInput= document.getElementById("submitInput");
-var resetInput=document.getElementById("ResetInput");
-        resetInput.removeAttribute('disabled');
-principalInput.setAttribute('disabled','');
-interestInput.setAttribute('disabled','');
-tensureInput.setAttribute('disabled','');
-disbursementInput.setAttribute('disabled','');
-submitInput.setAttribute('disabled','');
-
-amountCalculationExistPart(
-  document.getElementById("Disbursement1").value,
-  sessionStorage.getItem("Principal")*0.25,
-              0
-            );
-            amountCalculationExistPart(
-  document.getElementById("Disbursement2").value,
-              document.getElementById("RepaymentAmount2").value,
-              1
-            );
-            amountCalculationExistPart(
-  document.getElementById("Disbursement3").value,
-              document.getElementById("RepaymentAmount3").value,
-              2
-            );
-
-      }
-      function resetFunction(){
-        window.location.reload();
-//         document.getElementById("bnplForm").reset();
-//        document.getElementById("Principal").removeAttribute('disabled');
-//  document.getElementById("Interest").removeAttribute('disabled');
-// document.getElementById("Tensure").removeAttribute('disabled');
-//  document.getElementById("Disbursement").removeAttribute('disabled');
-// document.getElementById("submitInput").removeAttribute('disabled');
-// document.getElementById("ResetInput").setAttribute('disabled','');
-// document.getElementById("calculationTable").style.display ='none';
-// document.getElementById("Principal").value ='';
-// document.getElementById("Interest").value ='';
-// document.getElementById("Tensure").value ='';
-// document.getElementById("Disbursement").value ='';
-
-//         resetInput.removeAttribute('disabled');
-// principalInput.setAttribute('disabled','');
-// interestInput.setAttribute('disabled','');
-// tensureInput.setAttribute('disabled','');
-// disbursementInput.setAttribute('disabled','');
-// submitInput.setAttribute('disabled','');
-        // var resetInput=document.getElementById("ResetInput");
-        // resetInput.removeAttribute('disabled');
-      
-      }
-   
-    </script>
-  </head>
-
-  <body>
-    <div class="outerDiv">
-      <div><h1 class="title">BNPL Calculator</h1></div>
-      <div class="col-lg-8 mt-5 card">
-     
-        <form id="bnplForm" onsubmit="showTable();  return false;">
-          <div class="row pt-5">
-            <div class="col-sm-6 form-group row">
-              <label for="Principal" class="h3 col-sm-4 col-form-label"
-                >Principal:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="Principal"
-                  required
-                  onChange="sessionStorage.setItem(
-                    'Principal',
-                    document.getElementById('Principal').value
-                  );"
-                  placeholder="Principal amount"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6 form-group row">
-              <label for="Interest" class="h3 col-sm-4 col-form-label"
-                >Interest:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="Interest"
-                  required
-                  onChange="sessionStorage.setItem(
-                    'Interest',
-                    document.getElementById('Interest').value
-                  );"
-                  placeholder="Interest rate in %"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row pt-5">
-            <div class="col-sm-6 form-group row justify-content-center">
-              <label for="Tensure" class="h3 col-sm-4 col-form-label"
-                >Tensure:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="Tensure"
-                  required
-                  onChange="sessionStorage.setItem(
-                    'Tensure',
-                    document.getElementById('Tensure').value
-                  );"
-                  placeholder="Tensure amount"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6 form-group row justify-content-center">
-              <label for="Disbursement" class="h3 col-sm-4 col-form-label"
-                >Date of Disbursement:</label
-              >
-              <div class="col-sm-8 justify-content-center mt-2">
-                <input
-                  type="date"
-                  class="form-control"
-                  id="Disbursement"
-                  required="true"
-                  onChange="sessionStorage.setItem(
-                    'Disbursement',
-                    document.getElementById('Disbursement').value
-                  );"
-                  placeholder="Date of Disbursement in DD-MM-YYYY"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group row justify-content-center">
-            <div class="col-sm-2">
-              <input
-                type="submit"
-                class="submit btn btn-success h2"
-                id="submitInput"
-                value="Calculate"
-              ></input>
-            </div>
-            <div class="col-sm-2">
-              <!-- <button type="button" class="btn btn-info bg-success">
-                <i class="fa fa-spin"></i> Reset
-              </button> -->
-
-            <input type="button" id="ResetInput" value="Reset" class="btn btn-success h2" onclick="resetFunction()" disabled/>
-            </div>
-          </div>
-        </form>
+             } 
+             else {
+               $(".add-new").attr("disabled", "disabled");
+             }
+             // $(this).attr("disabled", "disabled");
+           });
+         });
+         
+         
+         function showTable() {
+         document.getElementById("calculationTable").style.display = "block";
+           Date.prototype.addDays = function(days) {
+         var date = new Date(this.valueOf());
+         date.setDate(date.getDate() + days);
+         return date;
+         }
+         let storedate = sessionStorage.getItem("Disbursement")?.split("-");
+               let formatedDate = storedate[1] + "/" + storedate[2] + "/" + storedate[0];
+         var date = new Date(formatedDate);
+         document.getElementById("Disbursement1").valueAsDate = date.addDays(14);
+         document.getElementById("Disbursement2").valueAsDate = date.addDays(30);
+         document.getElementById("Disbursement3").valueAsDate = date.addDays(45);
+         document.getElementById("RepaymentAmount1").value = sessionStorage.getItem("Principal")*0.25;
+         document.getElementById("RepaymentAmount2").value = sessionStorage.getItem("Principal")*0.50;
+         document.getElementById("RepaymentAmount3").value = sessionStorage.getItem("Principal")*0.75;
+         var principalInput=document.getElementById("Principal");
+         var interestInput = document.getElementById("Interest");
+         var tensureInput = document.getElementById("Tensure");
+         var disbursementInput = document.getElementById("Disbursement");
+         var submitInput= document.getElementById("submitInput");
+         var resetInput=document.getElementById("ResetInput");
+           resetInput.removeAttribute('disabled');
+         principalInput.setAttribute('disabled','');
+         interestInput.setAttribute('disabled','');
+         tensureInput.setAttribute('disabled','');
+         disbursementInput.setAttribute('disabled','');
+         submitInput.setAttribute('disabled','');
+         
+         insertTableValue(amountCalculationExistPart(
+         document.getElementById("Disbursement1").value,
+         sessionStorage.getItem("Principal")*0.25,
+                 0
+               ),1);
+               insertTableValue(amountCalculationExistPart(
+         document.getElementById("Disbursement2").value,
+                 document.getElementById("RepaymentAmount2").value,
+                 1
+               ),2);
+               insertTableValue(amountCalculationExistPart(
+         document.getElementById("Disbursement3").value,
+                 document.getElementById("RepaymentAmount3").value,
+                 2
+               ),3);
+         
+         }
+         function resetFunction(){
+           window.location.reload();
+         //         document.getElementById("bnplForm").reset();
+         //        document.getElementById("Principal").removeAttribute('disabled');
+         //  document.getElementById("Interest").removeAttribute('disabled');
+         // document.getElementById("Tensure").removeAttribute('disabled');
+         //  document.getElementById("Disbursement").removeAttribute('disabled');
+         // document.getElementById("submitInput").removeAttribute('disabled');
+         // document.getElementById("ResetInput").setAttribute('disabled','');
+         // document.getElementById("calculationTable").style.display ='none';
+         // document.getElementById("Principal").value ='';
+         // document.getElementById("Interest").value ='';
+         // document.getElementById("Tensure").value ='';
+         // document.getElementById("Disbursement").value ='';
+         
+         //         resetInput.removeAttribute('disabled');
+         // principalInput.setAttribute('disabled','');
+         // interestInput.setAttribute('disabled','');
+         // tensureInput.setAttribute('disabled','');
+         // disbursementInput.setAttribute('disabled','');
+         // submitInput.setAttribute('disabled','');
+           // var resetInput=document.getElementById("ResetInput");
+           // resetInput.removeAttribute('disabled');
+         
+         }
+         
+      </script>
+   </head>
+   <body>
+      <div class="outerDiv">
+         <div>
+            <h1 class="title">BNPL Calculator</h1>
+         </div>
+         <div class="col-lg-8 mt-5 card">
+            <form id="bnplForm" onsubmit="showTable();  return false;">
+               <div class="row pt-5">
+                  <div class="col-sm-6 form-group row">
+                     <label for="Principal" class="h3 col-sm-4 col-form-label"
+                        >Principal:</label
+                        >
+                     <div class="col-sm-8">
+                        <input
+                           type="number"
+                           class="form-control"
+                           id="Principal"
+                           required
+                           onChange="sessionStorage.setItem(
+                           'Principal',
+                           document.getElementById('Principal').value
+                           );"
+                           placeholder="Principal amount"
+                           />
+                     </div>
+                  </div>
+                  <div class="col-sm-6 form-group row">
+                     <label for="Interest" class="h3 col-sm-4 col-form-label"
+                        >Interest:</label
+                        >
+                     <div class="col-sm-8">
+                        <input
+                           type="number"
+                           class="form-control"
+                           id="Interest"
+                           required
+                           onChange="sessionStorage.setItem(
+                           'Interest',
+                           document.getElementById('Interest').value
+                           );"
+                           placeholder="Interest rate in %"
+                           />
+                     </div>
+                  </div>
+               </div>
+               <div class="row pt-5">
+                  <div class="col-sm-6 form-group row justify-content-center">
+                     <label for="Tensure" class="h3 col-sm-4 col-form-label"
+                        >Tensure:</label
+                        >
+                     <div class="col-sm-8">
+                        <input
+                           type="number"
+                           class="form-control"
+                           id="Tensure"
+                           required
+                           onChange="sessionStorage.setItem(
+                           'Tensure',
+                           document.getElementById('Tensure').value
+                           );"
+                           placeholder="Tensure amount"
+                           />
+                     </div>
+                  </div>
+                  <div class="col-sm-6 form-group row justify-content-center">
+                     <label for="Disbursement" class="h3 col-sm-4 col-form-label"
+                        >Date of Disbursement:</label
+                        >
+                     <div class="col-sm-8 justify-content-center mt-2">
+                        <input
+                           type="date"
+                           class="form-control"
+                           id="Disbursement"
+                           required="true"
+                           onChange="sessionStorage.setItem(
+                           'Disbursement',
+                           document.getElementById('Disbursement').value
+                           );"
+                           placeholder="Date of Disbursement in DD-MM-YYYY"
+                           />
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group row justify-content-center">
+                  <div class="col-sm-2">
+                     <input
+                        type="submit"
+                        class="submit btn btn-success h2"
+                        id="submitInput"
+                        value="Calculate"
+                        ></input>
+                  </div>
+                  <div class="col-sm-2">
+                     <!-- <button type="button" class="btn btn-info bg-success">
+                        <i class="fa fa-spin"></i> Reset
+                        </button> -->
+                     <input type="button" id="ResetInput" value="Reset" class="btn btn-success h2" onclick="resetFunction()" disabled/>
+                  </div>
+               </div>
+            </form>
+         </div>
       </div>
-    </div>
-    <div class="col-lg-12" id="calculationTable" style="display: none">
-      <div class="table-responsive">
-        <div class="table-responsive">
-          <div class="table-wrapper">
-            <div class="table-title">
-              <div class="row">
-                <div class="col-sm-8">
-                  <h2>Repayment <b>Details</b></h2>
-                </div>
-                <div class="col-sm-4">
-                  <button type="button" class="btn btn-info add-new bg-success">
-                    <i class="fa fa-plus"></i> Add Row
-                  </button>
-                </div>
-              </div>
+      <div class="col-lg-12" id="calculationTable" style="display: none">
+         <div class="table-responsive">
+            <div class="table-responsive">
+               <div class="table-wrapper">
+                  <div class="table-title">
+                     <div class="row">
+                        <div class="col-sm-8">
+                           <h2>Repayment <b>Details</b></h2>
+                        </div>
+                        <div class="col-sm-4">
+                           <button type="button" class="btn btn-info add-new bg-success">
+                           <i class="fa fa-plus"></i> Add Row
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>Date</th>
+                           <th>Amount Paid</th>
+                           <th>Penal Settled</th>
+                           <th>Interest Settled</th>
+                           <th>Principal Settled</th>
+                           <th>Net Outstanding</th>
+                           <th>Extra Paid</th>
+                           <th>Actions</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>
+                              <input
+                                 type="date"
+                                 class="form-control date1"
+                                 id="Disbursement1"
+                                 placeholder="Date of Disbursement in DD-MM-YYYY"
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="number"
+                                 class="form-control repayAmount1"
+                                 id="RepaymentAmount1"
+                                 placeholder="Repayment Amount"
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="penalPaid1 readonly-fields"
+                                 id="penalPaid1"
+                                 value=""
+                                 placeholder="Penal Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="InterestPaid1 readonly-fields"
+                                 id="InterestPaid1"
+                                 value=""
+                                 placeholder="Interest Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="PrincipalPaid1 readonly-fields"
+                                 id="PrincipalPaid1" 
+                                 value=""
+                                 placeholder="Principal Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="NetOutstandingPaid1 readonly-fields"
+                                 id="NetOutstandingPaid1"
+                                 value=""
+                                 placeholder="Net Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="extraPaid1 readonly-fields"
+                                 id="extraPaid1"
+                                 value=""
+                                 placeholder="Extra Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <a class="delete" title="Delete" data-toggle="tooltip"
+                                 ><i class="material-icons">&#xE872;</i></a
+                                 >
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <input
+                                 type="date"
+                                 class="form-control date2"
+                                 id="Disbursement2"
+                                 placeholder="Date of Disbursement in DD-MM-YYYY"
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="number"
+                                 class="form-control repayAmount2"
+                                 id="RepaymentAmount2"
+                                 placeholder="Repayment Amount"
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="penalPaid2 readonly-fields"
+                                 id="penalPaid2"
+                                 value=""
+                                 placeholder="Penal Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="InterestPaid2 readonly-fields"
+                                 id="InterestPaid2"
+                                 value=""
+                                 placeholder="Interest Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="PrincipalPaid2 readonly-fields"
+                                 id="PrincipalPaid2" 
+                                 value=""
+                                 placeholder="Principal Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="NetOutstandingPaid2 readonly-fields"
+                                 id="NetOutstandingPaid2"
+                                 value=""
+                                 placeholder="Net Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="extraPaid2 readonly-fields"
+                                 id="extraPaid2"
+                                 value=""
+                                 placeholder="Extra Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <a class="delete" title="Delete" data-toggle="tooltip"
+                                 ><i class="material-icons">&#xE872;</i></a
+                                 >
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <input
+                                 type="date"
+                                 class="form-control date3"
+                                 id="Disbursement3"
+                                 placeholder="Date of Disbursement in DD-MM-YYYY"
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="number"
+                                 class="form-control repayAmount3"
+                                 id="RepaymentAmount3"
+                                 placeholder="Repayment Amount"
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="penalPaid3 readonly-fields"
+                                 id="penalPaid3"
+                                 value=""
+                                 placeholder="Penal Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="InterestPaid3 readonly-fields"
+                                 id="InterestPaid3"
+                                 value=""
+                                 placeholder="Interest Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="PrincipalPaid3 readonly-fields"
+                                 id="PrincipalPaid3" 
+                                 value=""
+                                 placeholder="Principal Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="NetOutstandingPaid3 readonly-fields"
+                                 id="NetOutstandingPaid3"
+                                 value=""
+                                 placeholder="Net Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <input
+                                 type="text"
+                                 class="extraPaid3 readonly-fields"
+                                 id="extraPaid3"
+                                 value=""
+                                 placeholder="Extra Amount"
+                                 readonly
+                                 />
+                           </td>
+                           <td>
+                              <a class="delete" title="Delete" data-toggle="tooltip"
+                                 ><i class="material-icons">&#xE872;</i></a
+                                 >
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
             </div>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Amount Paid</th>
-                  <th>Penal Settled</th>
-                  <th>Interest Settled</th>
-                  <th>Principal Settled</th>
-                  <th>Net Outstanding</th>
-                  <th>Extra Paid</th>
-
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>
-                
-                    <input
-                      type="date"
-                      class="form-control date1"
-                      id="Disbursement1"
-                      onChange="datafunction()"
-                      placeholder="Date of Disbursement in DD-MM-YYYY"
-                    />
-            
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    class="form-control repayAmount1"
-                    id="RepaymentAmount1"
-                    placeholder="Repayment Amount"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="penalPaid1 readonly-fields"
-                    id="penalPaid1"
-                    value=""
-                    placeholder="Penal Amount"
-                    readonly
-                 
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="InterestPaid1 readonly-fields"
-                    id="InterestPaid"
-                    value=""
-                    placeholder="Interest Amount"
-                    readonly
-                
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="PrincipalPaid1 readonly-fields"
-                    id="PrincipalPaid" 
-                    value=""
-                    placeholder="Principal Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="NetOutstandingPaid1 readonly-fields"
-                    id="NetOutstandingPaid"
-                    value=""
-                    placeholder="Net Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="extraPaid1 readonly-fields"
-                    id="extraPaid"
-                    value=""
-                    placeholder="Extra Amount"
-                    readonly
-                  />
-                </td>
-
-                <td>
-                  <a class="delete" title="Delete" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE872;</i></a
-                  >
-                </td>
-              </tr> 
-              <tr>
-                <td>
-                
-                    <input
-                      type="date"
-                      class="form-control date2"
-                      id="Disbursement2"
-                      onChange="datafunction()"
-                      placeholder="Date of Disbursement in DD-MM-YYYY"
-                    />
-            
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    class="form-control repayAmount2"
-                    id="RepaymentAmount2"
-                    placeholder="Repayment Amount"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="penalPaid2 readonly-fields"
-                    id="penalPaid2"
-                    value=""
-                    placeholder="Penal Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="InterestPaid2 readonly-fields"
-                    id="InterestPaid"
-                    value=""
-                    placeholder="Interest Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="PrincipalPaid2 readonly-fields"
-                    id="PrincipalPaid" 
-                    value=""
-                    placeholder="Principal Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="NetOutstandingPaid2 readonly-fields"
-                    id="NetOutstandingPaid"
-                    value=""
-                    placeholder="Net Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="extraPaid2 readonly-fields"
-                    id="extraPaid"
-                    value=""
-                    placeholder="Extra Amount"
-                    readonly
-                  />
-                </td>
-
-                <td>
-                  <a class="delete" title="Delete" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE872;</i></a
-                  >
-                </td>
-              </tr> 
-              <tr>
-                <td>
-                
-                    <input
-                      type="date"
-                      class="form-control date3"
-                      id="Disbursement3"
-                      onChange="datafunction()"
-                      placeholder="Date of Disbursement in DD-MM-YYYY"
-                    />
-            
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    class="form-control repayAmount3"
-                    id="RepaymentAmount3"
-                    placeholder="Repayment Amount"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="penalPaid3 readonly-fields"
-                    id="penalPaid1"
-                    value=""
-                    placeholder="Penal Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="InterestPaid3 readonly-fields"
-                    id="InterestPaid"
-                    value=""
-                    placeholder="Interest Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="PrincipalPaid3 readonly-fields"
-                    id="PrincipalPaid" 
-                    value=""
-                    placeholder="Principal Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="NetOutstandingPaid3 readonly-fields"
-                    id="NetOutstandingPaid"
-                    value=""
-                    placeholder="Net Amount"
-                    readonly
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="extraPaid3 readonly-fields"
-                    id="extraPaid"
-                    value=""
-                    placeholder="Extra Amount"
-                    readonly
-                  />
-                </td>
-
-                <td>
-                  <a class="delete" title="Delete" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE872;</i></a
-                  >
-                </td>
-              </tr> 
-              
-              </tbody>
-            </table>
-          </div>
-        </div>
+         </div>
       </div>
-    </div>
-  </body>
+   </body>
 </html>
