@@ -11,7 +11,6 @@
          crossorigin="anonymous"
          />
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
       <link
          rel="stylesheet"
          href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
@@ -156,47 +155,57 @@
          var totalPrincipalSettled =0;
          function showDeleteButton(){
             var delBtns = document.getElementsByClassName('delete');
-      for (var i = 0; i < delBtns.length; i++) {
+         for (var i = 0; i < delBtns.length; i++) {
          if(i== delBtns.length-1){
             delBtns[i].hidden = false;
          }else{
             delBtns[i].hidden = true;  ////need to change from false to true
-
+         
          }
-      }
+         }
          }
          function loopTrigger(){
              totalPrincipalOutstanding =sessionStorage.getItem("Principal");
              totalPrincipalSettled =0;
             var table = document.getElementById('calcTable');
-       var rowLength = table.rows.length;
-       console.log("demow",table.rows[1].cells[3].firstChild.parentElement.children[0]);
-       console.log("demow",table.rows[1].cells[3].firstChild.parentElement.children[0].value);
-
-       for(var i=1; i<rowLength; i+=1){
+         var rowLength = table.rows.length;
+         
+         
+         for(var i=1; i<rowLength; i+=1){
          var row = table.rows[i];
          var privous=i==1?sessionStorage.getItem("Disbursement"):table.rows[i-1].cells[0].firstChild.parentElement.children[0].value;
-       var cellLength = row.cells.length;
-         for(var y=0; y<cellLength; y+=1){
-            if(y==0 || y==1){
+         var cellLength = row.cells.length;
+         // for(var y=0; y<cellLength; y+=1){
+            // if(y==0 || y==1){
                var date = row.cells[0].firstChild.parentElement.children[0].value;
                var amount= row.cells[1].firstChild.parentElement.children[0].value;
+               // console.log("addedId",row.cells[0].firstChild.parentElement.children[0].id)
               
-            
-               if(date && amount){
-                  let calculatedObj= amountCalculationExistPart(date,amount,0,privous);
-                  insertTableValue(calculatedObj,i);
-               }
-               
-
-            }
-          
-       
-           //do something with every cell here
+            if(amount && date){
+               if(date !=='' && amount !==''){
+                  if(false){
+                     // console.log("dynamicCalculated-->",i,row.cells[0].firstChild.parentElement.children[0].id =='Disbursement');
+                       amountCalculationPart(date,amount,privous);
+                  }else{
+                     let calculatedObj= amountCalculationExistPart(date,amount,i,privous);
+         // console.log("Calculated-->",i,calculatedObj);
+         insertTableValue(calculatedObj,i);
+                  }
+         
+         
          }
-       }
+            }
+              
+               
+         
+            // }
+          
+         
+           //do something with every cell here
+         // }
+         }
            }
-
+         
          function formatedDateFunction(givenDate) {
              if (givenDate) {
                let date = givenDate.split("-");
@@ -218,13 +227,13 @@
              dataTable[0].rows[index].cells[colNumber].innerHTML = value;
            }
            function insertTableValue(obj,index){
-       
+         
             document.getElementById(`penalPaid${index}`).value =obj.penalSettled;
             document.getElementById(`InterestPaid${index}`).value =obj.InterstSettled;
             document.getElementById(`PrincipalPaid${index}`).value =obj.PrincipalSettled;
             document.getElementById(`NetOutstandingPaid${index}`).value =obj.NetOutstanding;
             document.getElementById(`extraPaid${index}`).value =obj.extraPaid;
-
+         
            }
            function amountCalculationExistPart(date, repaymentAmount,index,previousDate) {
              // var PrincipalOS= sessionStorage.getItem("Principal");
@@ -253,7 +262,7 @@
              var principalSettled = 0;
              var InterestOS1 =(principalOS * InterestPercentage * Days) / 365;
              var InterestOS=parseFloat(InterestOS1.toFixed(2));
-
+         
              var principalOSFromula = principalOS - principalSettled;
          
              //penalOs -------------->
@@ -279,6 +288,7 @@
              var penalSettled = Math.min(repaymentAmount, PenalOS);
             //  insertCellValue(index, 2, penalSettled);
              calculatedObject["penalSettled"]=penalSettled;
+         
           //  document.getElementsByClassName("penalPaid1").value=8;
          
              // Interest Settled------------------->
@@ -296,7 +306,7 @@
              totalPrincipalSettled =parseFloat(PrincipalSettled.toFixed(2));
             //  insertCellValue(index, 4, parseFloat(PrincipalSettled.toFixed(2)));
              calculatedObject["PrincipalSettled"]=parseFloat(PrincipalSettled.toFixed(2));
-
+         
              //NetOutstanding ----------------->
              var NetOutstanding =
                principalOS +
@@ -307,92 +317,16 @@
                PrincipalSettled;
             //  insertCellValue(index, 5, parseFloat(NetOutstanding.toFixed(2)));
              calculatedObject["NetOutstanding"]=parseFloat(NetOutstanding.toFixed(2));
-
+         
              // Extra paid -------------->
              var extraPaid =
                parseFloat((repaymentAmount - PenalOS - InterstSettled - PrincipalSettled).toFixed(2));
             //  insertCellValue(index, 6, extraPaid);
              calculatedObject["extraPaid"]=extraPaid;
-console.log("obj",calculatedObject);
+         // console.log("obj",calculatedObject);
              return calculatedObject;
-
+         
            }
-         $(document).ready(function () {
-           $('[data-toggle="tooltip"]').tooltip();
-           var actions = $("table td:last-child").html();
-           // Append table with add row form on add new button click
-           $(".add-new").click(function () {
-             $(this).attr("disabled", "disabled");
-             var index = $("table tbody tr:last-child").index();
-             var row =
-               "<tr>" +
-               `<td><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY" /></td>` +
-               '<td><input  type="number" class="form-control repayAmount" id="RepaymentAmount" placeholder="Repayment Amount"/></td>' +
-               '<td><input  type="number" id="penalPaid" placeholder="Penal Amount" readonly  class="readonly-fields"/></td>' +
-               '<td><input  type="number" id="InterestPaid" placeholder="Interest Amount" readonly  class="readonly-fields InterestPaid"/></td>' +
-               '<td><input  type="number" id="PrincipalPaid" placeholder="Principal Amount" readonly  class="readonly-fields PrincipalPaid"/></td>' +
-               '<td><input  type="number" id="NetOutstandingPaid" placeholder="Net Amount" readonly  class="readonly-fields"/></td>' +
-               '<td><input  type="number" id="extraPaid" placeholder="Extra Amount" readonly  class="readonly-fields"/></td>' +
-               "<td>" +
-               '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
-               "</td>" +
-               "</tr>";
-             $("table").append(row);
-             $("table tbody tr")
-               .eq(index + 1)
-               .find(".add, .edit")
-               .toggle();
-             $('[data-toggle="tooltip"]').tooltip();
-             showDeleteButton();
-           });
-           // Add row on add button click
-           $(document).on("click", ".add", function () {
-             var empty = false;
-             var input = $(this).parents("tr").find('input[type="number"]');
-             input.each(function () {
-               if (!$(this).val()) {
-                 $(this).addClass("error");
-                 empty = true;
-               } else {
-                 $(this).removeClass("error");
-               }
-             });
-             $(this).parents("tr").find(".error").first().focus();
-             if (!empty) {
-               input.each(function () {
-                 $(this).parent("td").html($(this).val());
-               });
-               $(this).parents("tr").find(".add, .edit").toggle();
-               $(".add-new").removeAttr("disabled");
-             }
-           });
-           // Edit row on edit button click
-           $(document).on("click", ".edit", function () {
-             $(this)
-               .parents("tr")
-               .find("td:not(:last-child)")
-               .each(function () {
-                 $(this).html(
-                   '<input type="text" class="form-control" value="' +
-                     $(this).text() +
-                     '">'
-                 );
-               });
-             $(this).parents("tr").find(".add, .edit").toggle();
-             $(".add-new").attr("disabled", "disabled");
-           });
-           // Delete row on delete button click
-           $(document).on("click", ".delete", function () {
-            var PrincipalPaid=$(this).closest('tr').find('.PrincipalPaid').val()==''?$(this).closest('tr').find('.PrincipalPaid').val():0;
-            totalPrincipalOutstanding =totalPrincipalOutstanding+ PrincipalPaid
-             $(this).parents("tr").remove();
-             showDeleteButton();
-                $(".add-new").removeAttr("disabled");
-              
-         
-           });
-         
-          
            function amountCalculationPart(date, repaymentAmount,previousDate) { //////////////////work on previous date related work on calculation part
              var index = $("table tbody tr:last-child").index();
              // var PrincipalOS= sessionStorage.getItem("Principal");
@@ -474,6 +408,90 @@ console.log("obj",calculatedObject);
                repaymentAmount - PenalOS - InterstSettled - PrincipalSettled;
              insertCellValue(index, 6, parseFloat(extraPaid.toFixed(2)));
            }
+         $(document).ready(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+           var actions = $("table td:last-child").html();
+           // Append table with add row form on add new button click
+           $(".add-new").click(function () {
+             $(this).attr("disabled", "disabled");
+             var index = $("table tbody tr:last-child").index();
+             console.log("tableindex",index);
+             var InterestPaidId=`InterestPaid${index+2}`
+             var penalPaidId=`penalPaid${index+2}`
+             var PrincipalPaidId=`PrincipalPaid${index+2}`
+             var NetOutstandingPaidId=`NetOutstandingPaid${index+2}`
+             var extraPaidId=`extraPaid${index+2}`
+             var row =
+               "<tr>" +
+               `<td><input type="date" class="form-control datePicker" id="Disbursement" placeholder="Date of Disbursement in DD-MM-YYYY" /></td>` +
+               '<td><input  type="number" class="form-control repayAmount" id="RepaymentAmount" placeholder="Repayment Amount"/></td>' +
+               `<td><input  type="number" id=${penalPaidId} placeholder="Penal Amount" readonly  class="readonly-fields"/></td>` +
+               `<td><input  type="number" id=${InterestPaidId} placeholder="Interest Amount" readonly  class="readonly-fields InterestPaid"/></td>` +
+               `<td><input  type="number" id=${PrincipalPaidId} placeholder="Principal Amount" readonly  class="readonly-fields PrincipalPaid"/></td>` +
+               `<td><input  type="number" id=${NetOutstandingPaidId} placeholder="Net Amount" readonly  class="readonly-fields"/></td>` +
+               `<td><input  type="number" id=${extraPaidId} placeholder="Extra Amount" readonly  class="readonly-fields"/></td>` +
+               "<td>" +
+               '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
+               "</td>" +
+               "</tr>";
+               console.log("roww",row);
+             $("table").append(row);
+             $("table tbody tr")
+               .eq(index + 1)
+               .find(".add, .edit")
+               .toggle();
+             $('[data-toggle="tooltip"]').tooltip();
+             showDeleteButton();
+           });
+           // Add row on add button click
+           $(document).on("click", ".add", function () {
+             var empty = false;
+             var input = $(this).parents("tr").find('input[type="number"]');
+             input.each(function () {
+               if (!$(this).val()) {
+                 $(this).addClass("error");
+                 empty = true;
+               } else {
+                 $(this).removeClass("error");
+               }
+             });
+             $(this).parents("tr").find(".error").first().focus();
+             if (!empty) {
+               input.each(function () {
+                 $(this).parent("td").html($(this).val());
+               });
+               $(this).parents("tr").find(".add, .edit").toggle();
+               $(".add-new").removeAttr("disabled");
+             }
+           });
+           // Edit row on edit button click
+           $(document).on("click", ".edit", function () {
+             $(this)
+               .parents("tr")
+               .find("td:not(:last-child)")
+               .each(function () {
+                 $(this).html(
+                   '<input type="text" class="form-control" value="' +
+                     $(this).text() +
+                     '">'
+                 );
+               });
+             $(this).parents("tr").find(".add, .edit").toggle();
+             $(".add-new").attr("disabled", "disabled");
+           });
+           // Delete row on delete button click
+           $(document).on("click", ".delete", function () {
+            var PrincipalPaid=$(this).closest('tr').find('.PrincipalPaid').val()==''?$(this).closest('tr').find('.PrincipalPaid').val():0;
+            totalPrincipalOutstanding =totalPrincipalOutstanding+ PrincipalPaid
+             $(this).parents("tr").remove();
+             showDeleteButton();
+                $(".add-new").removeAttr("disabled");
+              
+               loopTrigger();
+           });
+         
+          
+          
          
            // Date change in the date picker click
            $(document).on("change", ".datePicker", function () {
@@ -481,10 +499,11 @@ console.log("obj",calculatedObject);
                $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
              ) {
                $(".add-new").removeAttr("disabled");
-               amountCalculationPart(
-                 $(this).val(),
-                 $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
-               );
+               // amountCalculationPart(
+               //   $(this).val(),
+               //   $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
+               // );
+               loopTrigger();
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
@@ -497,10 +516,11 @@ console.log("obj",calculatedObject);
          
              if ($(this).parents("tr").find('input[type="date"]')[0].value) {
                $(".add-new").removeAttr("disabled");
-               amountCalculationPart(
-                 $(this).parents("tr").find('input[type="date"]')[0].value,
-                 $(this).val()
-               );
+               // amountCalculationPart(
+               //   $(this).parents("tr").find('input[type="date"]')[0].value,
+               //   $(this).val()
+               // );
+               loopTrigger();
                $(".add-new").removeAttr("disabled");
              } else {
                $(".add-new").attr("disabled", "disabled");
@@ -537,7 +557,7 @@ console.log("obj",calculatedObject);
             //      $(this).index(),
             //      $(this).parents('tr').prev().children().find('input[type="date"]').val()
             //    );
-
+         
             //    insertTableValue(calculatedObj,2);
             //    $(".add-new").removeAttr("disabled");
                loopTrigger();
@@ -557,14 +577,14 @@ console.log("obj",calculatedObject);
                //   $(this).parents('tr').prev().children().find('input[type="date"]').val()
                // );
                // console.log("sdfsdfsdfsd", $(this).parents('tr').prev().children().find('input[type="date"]').val())
-
+         
                // insertTableValue(calculatedObj,3);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-    
+         
            });
            $(document).on("change", ".date1", function () {
              if (document.getElementById("RepaymentAmount1").value) {
@@ -578,7 +598,7 @@ console.log("obj",calculatedObject);
                // insertTableValue(calculatedObj,1);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
-
+         
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
@@ -672,29 +692,6 @@ console.log("obj",calculatedObject);
          function resetFunction(){
             sessionStorage.clear();
            window.location.reload();
-        
-         //         document.getElementById("bnplForm").reset();
-         //        document.getElementById("Principal").removeAttribute('disabled');
-         //  document.getElementById("Interest").removeAttribute('disabled');
-         // document.getElementById("Tensure").removeAttribute('disabled');
-         //  document.getElementById("Disbursement").removeAttribute('disabled');
-         // document.getElementById("submitInput").removeAttribute('disabled');
-         // document.getElementById("ResetInput").setAttribute('disabled','');
-         // document.getElementById("calculationTable").style.display ='none';
-         // document.getElementById("Principal").value ='';
-         // document.getElementById("Interest").value ='';
-         // document.getElementById("Tensure").value ='';
-         // document.getElementById("Disbursement").value ='';
-         
-         //         resetInput.removeAttribute('disabled');
-         // principalInput.setAttribute('disabled','');
-         // interestInput.setAttribute('disabled','');
-         // tensureInput.setAttribute('disabled','');
-         // disbursementInput.setAttribute('disabled','');
-         // submitInput.setAttribute('disabled','');
-           // var resetInput=document.getElementById("ResetInput");
-           // resetInput.removeAttribute('disabled');
-         
          }
          
       </script>
@@ -873,7 +870,6 @@ console.log("obj",calculatedObject);
                                  type="text"
                                  class="PrincipalPaid1 readonly-fields PrincipalPaid"
                                  id="PrincipalPaid1" 
-                                
                                  placeholder="Principal Amount"
                                  readonly
                                  />
