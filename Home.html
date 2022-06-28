@@ -255,8 +255,11 @@
              var distributionDate = new Date(
                formatedDateFunction(previousDate?previousDate:sessionStorage.getItem("Disbursement"))
              );
+             var amountDistributionDate= new Date(
+               formatedDateFunction(sessionStorage.getItem("Disbursement"))
+             );
              var Days =
-               repayDate == distributionDate
+               repayDate.valueOf() == distributionDate.valueOf()
                  ? 1
                  : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
              var principalSettled = 0;
@@ -266,24 +269,41 @@
              var principalOSFromula = principalOS - principalSettled;
          
              //penalOs -------------->
+             let storedate = sessionStorage.getItem("Disbursement")?.split("-");
+               let formatedDate1 = storedate[1] + "/" + storedate[2] + "/" + storedate[0];
+         var date12 = new Date(formatedDate1);
+         // console.log("demooo",InterestOS,Days,repayDate.valueOf() == distributionDate.valueOf(),repayDate.valueOf(),distributionDate.valueOf())
+
              var calculation =
-               (principalOSFromula *
+               (parseFloat(principalOS.toFixed(2)) *
                  Penal *
                  0.01 *
                  days(
                    repayDate,
-                   Math.max(
-                     (distributionDate + sessionStorage.getItem("Tensure"),
-                     repayDate)
-                   )
+                   new Date(Math.max.apply(null, [date12.addDays(parseInt(sessionStorage.getItem("Tensure"))),distributionDate]))
                  )) /
                365;
+
              var PenalOS =
-               days(repayDate, distributionDate) >
-               sessionStorage.getItem("Tensure") + gracePeriod
-                 ? calculation
+               (days(repayDate, amountDistributionDate)) >
+               (parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod))
+                 ? parseFloat(calculation.toFixed(2))
                  : 0;
-                 console.log("dummyvaluees",Days,principalOS,InterestOS1,InterestOS,PenalOS);
+               //   console.log("calculation",calculation,(days(repayDate, amountDistributionDate)) >
+               // (parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)))
+               //   console.log("dummyvaluees",calculation,parseFloat(principalOS.toFixed(2)), days(
+               //     repayDate,
+               //     Math.max(
+               //       (parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),
+               //       parseInt(repayDate)
+               //     )
+               //   ),repayDate,Math.max(
+               //       (parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),
+               //       parseInt(repayDate)
+               //     ),(parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),parseInt(repayDate));
+
+               //  console.log((days(repayDate, amountDistributionDate)),(parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)),calculation,days(repayDate, amountDistributionDate) >parseInt(parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)))
+                 
              // Penalsettled-------->
              var penalSettled = Math.min(repaymentAmount, PenalOS);
             //  insertCellValue(index, 2, penalSettled);
@@ -415,7 +435,7 @@
            $(".add-new").click(function () {
              $(this).attr("disabled", "disabled");
              var index = $("table tbody tr:last-child").index();
-             console.log("tableindex",index);
+            //  console.log("tableindex",index);
              var InterestPaidId=`InterestPaid${index+2}`
              var penalPaidId=`penalPaid${index+2}`
              var PrincipalPaidId=`PrincipalPaid${index+2}`
@@ -434,7 +454,7 @@
                '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
                "</td>" +
                "</tr>";
-               console.log("roww",row);
+               // console.log("roww",row);
              $("table").append(row);
              $("table tbody tr")
                .eq(index + 1)
