@@ -273,7 +273,7 @@
                let formatedDate1 = storedate[1] + "/" + storedate[2] + "/" + storedate[0];
          var date12 = new Date(formatedDate1);
          // console.log("demooo",InterestOS,Days,repayDate.valueOf() == distributionDate.valueOf(),repayDate.valueOf(),distributionDate.valueOf())
-
+         
              var calculation =
                (parseFloat(principalOS.toFixed(2)) *
                  Penal *
@@ -283,7 +283,7 @@
                    new Date(Math.max.apply(null, [date12.addDays(parseInt(sessionStorage.getItem("Tensure"))),distributionDate]))
                  )) /
                365;
-
+         
              var PenalOS =
                (days(repayDate, amountDistributionDate)) >
                (parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod))
@@ -301,7 +301,7 @@
                //       (parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),
                //       parseInt(repayDate)
                //     ),(parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),parseInt(repayDate));
-
+         
                //  console.log((days(repayDate, amountDistributionDate)),(parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)),calculation,days(repayDate, amountDistributionDate) >parseInt(parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)))
                  
              // Penalsettled-------->
@@ -1068,6 +1068,9 @@
                         </tr>
                      </tbody>
                   </table>
+                  <div class="col-6">
+                  <div class="row"> <div class="col-md-6"><p>guruvignesh</p></div> <div class="col-md-6"><p>guruvignesh</p></div></div>
+               </div>
                </div>
             </div>
          </div>
