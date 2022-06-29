@@ -153,6 +153,11 @@
       <script>
          var totalPrincipalOutstanding =sessionStorage.getItem("Principal");
          var totalPrincipalSettled =0;
+         var totalPenalSettled=0;
+         var totalInterestSettled=0;
+         var totalPrincipalSettled=0;
+         var totalNetOutstanding=0;
+         var totalExtraPaid=0;
          function showDeleteButton(){
             var delBtns = document.getElementsByClassName('delete');
          for (var i = 0; i < delBtns.length; i++) {
@@ -167,6 +172,11 @@
          function loopTrigger(){
              totalPrincipalOutstanding =sessionStorage.getItem("Principal");
              totalPrincipalSettled =0;
+              totalPenalSettled=0;
+          totalInterestSettled=0;
+          totalPrincipalSettled=0;
+          totalNetOutstanding=0;
+          totalExtraPaid=0;
             var table = document.getElementById('calcTable');
          var rowLength = table.rows.length;
          
@@ -188,8 +198,18 @@
                        amountCalculationPart(date,amount,privous);
                   }else{
                      let calculatedObj= amountCalculationExistPart(date,amount,i,privous);
-         // console.log("Calculated-->",i,calculatedObj);
+//                      InterstSettled: 0.25
+// NetOutstanding: 0.25
+// PrincipalSettled: 99.75
+// extraPaid: 0
+// penalSettled: 0
+         console.log("Calculated-->",i,calculatedObj);
+         totalPenalSettled += calculatedObj.penalSettled;
+         totalInterestSettled += calculatedObj.interestSettled;
+         totalPrincipalOutstanding += calculatedObj.principalSettled;
+         totalExtraPaid += calculatedObj.extraPaid;
          insertTableValue(calculatedObj,i);
+         document.getElementById("Penal-Settled-Amount").innerHTML=20;
                   }
          
          
@@ -818,7 +838,7 @@
             </form>
          </div>
       </div>
-      <div class="col-lg-12" id="calculationTable" style="display: none">
+      <div class="col-lg-12" id="calculationTable" style="display: block">
          <div class="table-responsive">
             <div class="table-responsive">
                <div class="table-wrapper">
@@ -1068,8 +1088,14 @@
                         </tr>
                      </tbody>
                   </table>
-                  <div class="col-6">
-                  <div class="row"> <div class="col-md-6"><p>guruvignesh</p></div> <div class="col-md-6"><p>guruvignesh</p></div></div>
+                  <div class="col-md-6" style="background: #27c46b;">
+                     <div><h5>Total Amount table</h5></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Penal Settled Amount</p></div><div class="col-md-7"><p id="Penal-Settled-Amount">0</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Interest Settled Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Principal Settled Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Net Outstanding Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Extra Paid Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
+
                </div>
                </div>
             </div>
