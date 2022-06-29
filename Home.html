@@ -155,7 +155,7 @@
          var totalPrincipalSettled =0;
          var totalPenalSettled=0;
          var totalInterestSettled=0;
-         var totalPrincipalSettled=0;
+         var totalPrincipalSettledAmount=0;
          var totalNetOutstanding=0;
          var totalExtraPaid=0;
          function showDeleteButton(){
@@ -174,12 +174,17 @@
              totalPrincipalSettled =0;
               totalPenalSettled=0;
           totalInterestSettled=0;
-          totalPrincipalSettled=0;
+          totalPrincipalSettledAmount=0;
           totalNetOutstanding=0;
           totalExtraPaid=0;
             var table = document.getElementById('calcTable');
          var rowLength = table.rows.length;
-         
+         document.getElementById("Penal-Settled-Amount").innerHTML=parseFloat(totalPenalSettled.toFixed(2));
+         document.getElementById("Interest-Settled-Amount").innerHTML=parseFloat(totalInterestSettled.toFixed(2));
+         document.getElementById("Principal-Settled-Amount").innerHTML=parseFloat(totalPrincipalSettledAmount.toFixed(2));
+         document.getElementById("Net-Outstanding-Amount").innerHTML=parseFloat(totalNetOutstanding.toFixed(2));
+         document.getElementById("Extra-Paid-Amount").innerHTML=parseFloat(totalExtraPaid.toFixed(2));
+
          
          for(var i=1; i<rowLength; i+=1){
          var row = table.rows[i];
@@ -189,32 +194,25 @@
             // if(y==0 || y==1){
                var date = row.cells[0].firstChild.parentElement.children[0].value;
                var amount= row.cells[1].firstChild.parentElement.children[0].value;
-               // console.log("addedId",row.cells[0].firstChild.parentElement.children[0].id)
               
             if(amount && date){
                if(date !=='' && amount !==''){
                   if(false){
-                     // console.log("dynamicCalculated-->",i,row.cells[0].firstChild.parentElement.children[0].id =='Disbursement');
                        amountCalculationPart(date,amount,privous);
                   }else{
                      let calculatedObj= amountCalculationExistPart(date,amount,i,privous);
-//                      InterstSettled: 0.25
-// NetOutstanding: 0.25
-// PrincipalSettled: 99.75
-// extraPaid: 0
-// penalSettled: 0
-         console.log("Calculated-->",i,calculatedObj);
+
          totalPenalSettled += calculatedObj.penalSettled;
-         totalInterestSettled += calculatedObj.interestSettled;
-         totalPrincipalSettled += calculatedObj.principalSettled;
+         totalInterestSettled += calculatedObj.InterstSettled;
+         totalPrincipalSettledAmount += calculatedObj.PrincipalSettled;
          totalNetOutstanding += calculatedObj.NetOutstanding;
          totalExtraPaid += calculatedObj.extraPaid;
          insertTableValue(calculatedObj,i);
-         document.getElementById("Penal-Settled-Amount").innerHTML=totalPenalSettled;
-         document.getElementById("Interest-Settled-Amount").innerHTML=totalInterestSettled;
-         document.getElementById("Principal-Settled-Amount").innerHTML=totalPrincipalSettled;
-         document.getElementById("Net-Outstanding-Amount").innerHTML=totalNetOutstanding;
-         document.getElementById("Extra-Paid-Amount").innerHTML=totalExtraPaid;
+         document.getElementById("Penal-Settled-Amount").innerHTML=parseFloat(totalPenalSettled.toFixed(2));
+         document.getElementById("Interest-Settled-Amount").innerHTML=parseFloat(totalInterestSettled.toFixed(2));
+         document.getElementById("Principal-Settled-Amount").innerHTML=parseFloat(totalPrincipalSettledAmount.toFixed(2));
+         document.getElementById("Net-Outstanding-Amount").innerHTML=parseFloat(totalNetOutstanding.toFixed(2));
+         document.getElementById("Extra-Paid-Amount").innerHTML=parseFloat(totalExtraPaid.toFixed(2));
 
                   }
          
@@ -298,7 +296,6 @@
              let storedate = sessionStorage.getItem("Disbursement")?.split("-");
                let formatedDate1 = storedate[1] + "/" + storedate[2] + "/" + storedate[0];
          var date12 = new Date(formatedDate1);
-         // console.log("demooo",InterestOS,Days,repayDate.valueOf() == distributionDate.valueOf(),repayDate.valueOf(),distributionDate.valueOf())
          
              var calculation =
                (parseFloat(principalOS.toFixed(2)) *
@@ -315,21 +312,7 @@
                (parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod))
                  ? parseFloat(calculation.toFixed(2))
                  : 0;
-               //   console.log("calculation",calculation,(days(repayDate, amountDistributionDate)) >
-               // (parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)))
-               //   console.log("dummyvaluees",calculation,parseFloat(principalOS.toFixed(2)), days(
-               //     repayDate,
-               //     Math.max(
-               //       (parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),
-               //       parseInt(repayDate)
-               //     )
-               //   ),repayDate,Math.max(
-               //       (parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),
-               //       parseInt(repayDate)
-               //     ),(parseInt(amountDistributionDate) + parseInt(sessionStorage.getItem("Tensure"))),parseInt(repayDate));
          
-               //  console.log((days(repayDate, amountDistributionDate)),(parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)),calculation,days(repayDate, amountDistributionDate) >parseInt(parseInt(sessionStorage.getItem("Tensure")) + parseInt(gracePeriod)))
-                 
              // Penalsettled-------->
              var penalSettled = Math.min(repaymentAmount, PenalOS);
             //  insertCellValue(index, 2, penalSettled);
@@ -369,7 +352,6 @@
                parseFloat((repaymentAmount - PenalOS - InterstSettled - PrincipalSettled).toFixed(2));
             //  insertCellValue(index, 6, extraPaid);
              calculatedObject["extraPaid"]=extraPaid;
-         // console.log("obj",calculatedObject);
              return calculatedObject;
          
            }
@@ -461,7 +443,6 @@
            $(".add-new").click(function () {
              $(this).attr("disabled", "disabled");
              var index = $("table tbody tr:last-child").index();
-            //  console.log("tableindex",index);
              var InterestPaidId=`InterestPaid${index+2}`
              var penalPaidId=`penalPaid${index+2}`
              var PrincipalPaidId=`PrincipalPaid${index+2}`
@@ -480,7 +461,6 @@
                '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
                "</td>" +
                "</tr>";
-               // console.log("roww",row);
              $("table").append(row);
              $("table tbody tr")
                .eq(index + 1)
@@ -585,7 +565,6 @@
             //      $(this).index(),
             //      $(this).parents('tr').prev().children().find('input[type="date"]').val()
             //    );
-            //    console.log("sdfsdfsdfsd", $(this).parents('tr').prev().children().find('input[type="date"]').val())
             //    insertTableValue(calculatedObj,1);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
@@ -622,7 +601,6 @@
                //   $(this).index(),
                //   $(this).parents('tr').prev().children().find('input[type="date"]').val()
                // );
-               // console.log("sdfsdfsdfsd", $(this).parents('tr').prev().children().find('input[type="date"]').val())
          
                // insertTableValue(calculatedObj,3);
                $(".add-new").removeAttr("disabled");
@@ -844,7 +822,7 @@
             </form>
          </div>
       </div>
-      <div class="col-lg-12" id="calculationTable" style="display: block">
+      <div class="col-lg-12" id="calculationTable" style="display: none">
          <div class="table-responsive">
             <div class="table-responsive">
                <div class="table-wrapper">
@@ -1094,13 +1072,15 @@
                         </tr>
                      </tbody>
                   </table>
-                  <div class="col-md-6" style="background: #27c46b;">
-                     <div><h5>Total Amount table</h5></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Penal Settled Amount</p></div><div class="col-md-7"><p id="Penal-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Interest Settled Amount</p></div><div class="col-md-7"><p id="Interest-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Principal Settled Amount</p></div><div class="col-md-7"><p id="Principal-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Net Outstanding Amount</p></div><div class="col-md-7"><p id="Net-Outstanding-Amount">0</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Extra Paid Amount</p></div><div class="col-md-7"><p id="Extra-Paid-Amount">0</p></div></div>
+                  <div class="col-md-6">
+                     <div class="table-title">
+                     <div class="col-sm-8"><div class="pb-md-1"><h2>Total Amount <b>Details</b></h2></div></div></div>
+                     
+                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Penal Settled Amount</p></div><div class="col-md-7"><p id="Penal-Settled-Amount">0</p></div></div>
+                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Interest Settled Amount</p></div><div class="col-md-7"><p id="Interest-Settled-Amount">0</p></div></div>
+                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Principal Settled Amount</p></div><div class="col-md-7"><p id="Principal-Settled-Amount">0</p></div></div>
+                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Net Outstanding Amount</p></div><div class="col-md-7"><p id="Net-Outstanding-Amount">0</p></div></div>
+                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Extra Paid Amount</p></div><div class="col-md-7"><p id="Extra-Paid-Amount">0</p></div></div>
 
                </div>
                </div>
