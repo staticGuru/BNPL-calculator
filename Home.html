@@ -184,7 +184,7 @@
          document.getElementById("Principal-Settled-Amount").innerHTML=parseFloat(totalPrincipalSettledAmount.toFixed(2));
          document.getElementById("Net-Outstanding-Amount").innerHTML=parseFloat(totalNetOutstanding.toFixed(2));
          document.getElementById("Extra-Paid-Amount").innerHTML=parseFloat(totalExtraPaid.toFixed(2));
-
+         
          
          for(var i=1; i<rowLength; i+=1){
          var row = table.rows[i];
@@ -201,7 +201,7 @@
                        amountCalculationPart(date,amount,privous);
                   }else{
                      let calculatedObj= amountCalculationExistPart(date,amount,i,privous);
-
+         
          totalPenalSettled += calculatedObj.penalSettled;
          totalInterestSettled += calculatedObj.InterstSettled;
          totalPrincipalSettledAmount += calculatedObj.PrincipalSettled;
@@ -213,7 +213,7 @@
          document.getElementById("Principal-Settled-Amount").innerHTML=parseFloat(totalPrincipalSettledAmount.toFixed(2));
          document.getElementById("Net-Outstanding-Amount").innerHTML=parseFloat(totalNetOutstanding.toFixed(2));
          document.getElementById("Extra-Paid-Amount").innerHTML=parseFloat(totalExtraPaid.toFixed(2));
-
+         
                   }
          
          
@@ -1074,15 +1074,53 @@
                   </table>
                   <div class="col-md-6">
                      <div class="table-title">
-                     <div class="col-sm-8"><div class="pb-md-1"><h2>Total Amount <b>Details</b></h2></div></div></div>
-                     
-                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Penal Settled Amount</p></div><div class="col-md-7"><p id="Penal-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Interest Settled Amount</p></div><div class="col-md-7"><p id="Interest-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Principal Settled Amount</p></div><div class="col-md-7"><p id="Principal-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Net Outstanding Amount</p></div><div class="col-md-7"><p id="Net-Outstanding-Amount">0</p></div></div>
-                  <div class="row pl-md-5"><div class="col-md-5 pl-2"><p>Extra Paid Amount</p></div><div class="col-md-7"><p id="Extra-Paid-Amount">0</p></div></div>
-
-               </div>
+                        <div class="col-sm-8">
+                           <div class="pb-md-1">
+                              <h2>Total Amount <b>Details</b></h2>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row pl-md-5">
+                        <div class="col-md-5 pl-2">
+                           <p>Penal Settled Amount</p>
+                        </div>
+                        <div class="col-md-7">
+                           <p id="Penal-Settled-Amount">0</p>
+                        </div>
+                     </div>
+                     <div class="row pl-md-5">
+                        <div class="col-md-5 pl-2">
+                           <p>Interest Settled Amount</p>
+                        </div>
+                        <div class="col-md-7">
+                           <p id="Interest-Settled-Amount">0</p>
+                        </div>
+                     </div>
+                     <div class="row pl-md-5">
+                        <div class="col-md-5 pl-2">
+                           <p>Principal Settled Amount</p>
+                        </div>
+                        <div class="col-md-7">
+                           <p id="Principal-Settled-Amount">0</p>
+                        </div>
+                     </div>
+                     <div class="row pl-md-5">
+                        <div class="col-md-5 pl-2">
+                           <p>Net Outstanding Amount</p>
+                        </div>
+                        <div class="col-md-7">
+                           <p id="Net-Outstanding-Amount">0</p>
+                        </div>
+                     </div>
+                     <div class="row pl-md-5">
+                        <div class="col-md-5 pl-2">
+                           <p>Extra Paid Amount</p>
+                        </div>
+                        <div class="col-md-7">
+                           <p id="Extra-Paid-Amount">0</p>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
