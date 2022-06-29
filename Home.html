@@ -206,10 +206,16 @@
          console.log("Calculated-->",i,calculatedObj);
          totalPenalSettled += calculatedObj.penalSettled;
          totalInterestSettled += calculatedObj.interestSettled;
-         totalPrincipalOutstanding += calculatedObj.principalSettled;
+         totalPrincipalSettled += calculatedObj.principalSettled;
+         totalNetOutstanding += calculatedObj.NetOutstanding;
          totalExtraPaid += calculatedObj.extraPaid;
          insertTableValue(calculatedObj,i);
-         document.getElementById("Penal-Settled-Amount").innerHTML=20;
+         document.getElementById("Penal-Settled-Amount").innerHTML=totalPenalSettled;
+         document.getElementById("Interest-Settled-Amount").innerHTML=totalInterestSettled;
+         document.getElementById("Principal-Settled-Amount").innerHTML=totalPrincipalSettled;
+         document.getElementById("Net-Outstanding-Amount").innerHTML=totalNetOutstanding;
+         document.getElementById("Extra-Paid-Amount").innerHTML=totalExtraPaid;
+
                   }
          
          
@@ -1091,10 +1097,10 @@
                   <div class="col-md-6" style="background: #27c46b;">
                      <div><h5>Total Amount table</h5></div>
                   <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Penal Settled Amount</p></div><div class="col-md-7"><p id="Penal-Settled-Amount">0</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Interest Settled Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Principal Settled Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Net Outstanding Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
-                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Extra Paid Amount</p></div><div class="col-md-7"><p>guruvignesh</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Interest Settled Amount</p></div><div class="col-md-7"><p id="Interest-Settled-Amount">0</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Principal Settled Amount</p></div><div class="col-md-7"><p id="Principal-Settled-Amount">0</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Net Outstanding Amount</p></div><div class="col-md-7"><p id="Net-Outstanding-Amount">0</p></div></div>
+                  <div class="row pl-md-5 pb-md-1"><div class="col-md-5 pl-2"><p>Extra Paid Amount</p></div><div class="col-md-7"><p id="Extra-Paid-Amount">0</p></div></div>
 
                </div>
                </div>
