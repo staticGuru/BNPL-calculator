@@ -190,7 +190,7 @@
          var row = table.rows[i];
          var privous=i==1?sessionStorage.getItem("Disbursement"):table.rows[i-1].cells[0].firstChild.parentElement.children[0].value;
          var cellLength = row.cells.length;
-        
+         
                var date = row.cells[0].firstChild.parentElement.children[0].value;
                var amount= row.cells[1].firstChild.parentElement.children[0].value;
               
@@ -515,7 +515,7 @@
          document.getElementById("Disbursement1").valueAsDate = date.addDays(6);
          document.getElementById("Disbursement2").valueAsDate = date.addDays(11);
          document.getElementById("Disbursement3").valueAsDate = date.addDays(16);
-        
+         
          var principalInput=document.getElementById("Principal");
          var interestInput = document.getElementById("Interest");
          var tensureInput = document.getElementById("Tensure");
@@ -529,7 +529,7 @@
          disbursementInput.setAttribute('disabled','');
          submitInput.setAttribute('disabled','');
           loopTrigger();
-        
+         
          
          }
          function resetFunction(){
