@@ -197,7 +197,7 @@
             if(amount && date){
                if(date !=='' && amount !==''){
                   if(false){
-                       amountCalculationPart(date,amount,privous);
+                     //   amountCalculationPart(date,amount,privous);
                   }else{
                      let calculatedObj= amountCalculationExistPart(date,amount,i,privous);
          
@@ -299,7 +299,6 @@
          
              // Penalsettled-------->
              var penalSettled = Math.min(repaymentAmount, PenalOS);
-            //  insertCellValue(index, 2, penalSettled);
              calculatedObject["penalSettled"]=penalSettled;
          
          
@@ -309,7 +308,6 @@
                repaymentAmount - penalSettled,
                InterestOS
              );
-            //  insertCellValue(index, 3, InterstSettled);
              calculatedObject["InterstSettled"]=InterstSettled;
              //Principal settled ----------------->
              var PrincipalSettled = Math.min(
@@ -317,7 +315,6 @@
                principalOS
              );
              totalPrincipalSettled =parseFloat(PrincipalSettled.toFixed(2));
-            //  insertCellValue(index, 4, parseFloat(PrincipalSettled.toFixed(2)));
              calculatedObject["PrincipalSettled"]=parseFloat(PrincipalSettled.toFixed(2));
          
              //NetOutstanding ----------------->
@@ -328,98 +325,16 @@
                penalSettled -
                InterstSettled -
                PrincipalSettled;
-            //  insertCellValue(index, 5, parseFloat(NetOutstanding.toFixed(2)));
              calculatedObject["NetOutstanding"]=parseFloat(NetOutstanding.toFixed(2));
          
              // Extra paid -------------->
              var extraPaid =
                parseFloat((repaymentAmount - PenalOS - InterstSettled - PrincipalSettled).toFixed(2));
-            //  insertCellValue(index, 6, extraPaid);
              calculatedObject["extraPaid"]=extraPaid;
              return calculatedObject;
          
            }
-           function amountCalculationPart(date, repaymentAmount,previousDate) { 
-             var index = $("table tbody tr:last-child").index();
-             // var PrincipalOS= sessionStorage.getItem("Principal");
-             var principalOS =0;
-            //  if(totalPrincipalOutstanding ===0){
-            //    principalOS =(sessionStorage.getItem("Principal") ?? 100)-totalPrincipalSettled; // Doubts in PrincipalOS callculations
-            //    totalPrincipalOutstanding =principalOS;
-            //  }else{
-               principalOS = totalPrincipalOutstanding-totalPrincipalSettled;
-               totalPrincipalOutstanding =principalOS ==0?0:principalOS;
-            //  }
-             var InterestPercentage = sessionStorage.getItem("Interest") * 0.01;
-             var gracePeriod = 0;
-             var Penal = 24;
-             var repayDate = new Date(formatedDateFunction(date));
-             var distributionDate = new Date(
-               formatedDateFunction(previousDate?previousDate:sessionStorage.getItem("Disbursement"))
-             );
-             var Days =
-               repayDate == distributionDate
-                 ? 1
-                 : days(repayDate, distributionDate); //IF(D3=$B$6,1,DAYS(D3,D2))
-             var principalSettled = 0;
-             var InterestOS1 =(principalOS * InterestPercentage * Days) / 365;
-             var InterestOS=parseFloat(InterestOS1.toFixed(2));
-         
-             var principalOSFromula = principalOS - principalSettled;
-         
-             //penalOs -------------->
-             var calculation =
-               (principalOSFromula *
-                 Penal *
-                 0.01 *
-                 days(
-                   repayDate,
-                   Math.max(
-                     (distributionDate + sessionStorage.getItem("Tensure"),
-                     repayDate)
-                   )
-                 )) /
-               365;
-             var PenalOS =
-               days(repayDate, distributionDate) >
-               sessionStorage.getItem("Tensure") + gracePeriod
-                 ? calculation
-                 : 0;
-         
-             // Penalsettled-------->
-             var penalSettled = Math.min(repaymentAmount, PenalOS);
-             insertCellValue(index, 2, penalSettled);
-         
-             // Interest Settled------------------->
-             var InterstSettled = Math.min(
-               repaymentAmount - penalSettled,
-               InterestOS
-             );
-             insertCellValue(index, 3, InterstSettled);
-         
-             //Principal settled ----------------->
-             var PrincipalSettled = Math.min(
-               repaymentAmount - PenalOS - InterstSettled,
-               principalOS
-             );
-             totalPrincipalSettled =parseFloat(PrincipalSettled.toFixed(2));
-             insertCellValue(index, 4, PrincipalSettled);
-         
-             //NetOutstanding ----------------->
-             var NetOutstanding =
-               principalOS +
-               InterestOS +
-               PenalOS -
-               penalSettled -
-               InterstSettled -
-               PrincipalSettled;
-             insertCellValue(index, 5, parseFloat(NetOutstanding.toFixed(2)));
-         
-             // Extra paid -------------->
-             var extraPaid =
-               repaymentAmount - PenalOS - InterstSettled - PrincipalSettled;
-             insertCellValue(index, 6, parseFloat(extraPaid.toFixed(2)));
-           }
+           
          $(document).ready(function () {
            $('[data-toggle="tooltip"]').tooltip();
            var actions = $("table td:last-child").html();
@@ -509,84 +424,46 @@
                $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
              ) {
                $(".add-new").removeAttr("disabled");
-               // amountCalculationPart(
-               //   $(this).val(),
-               //   $(this).parents("tr").find('input[id="RepaymentAmount"]')[0].value
-               // );
+             
                loopTrigger();
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
          
            //repaymentAmount ---------->
            $(document).on("change", ".repayAmount", function () {
-             // var repaymentAmount = $(this).val();
          
              if ($(this).parents("tr").find('input[type="date"]')[0].value) {
                $(".add-new").removeAttr("disabled");
-               // amountCalculationPart(
-               //   $(this).parents("tr").find('input[type="date"]')[0].value,
-               //   $(this).val()
-               // );
+          
                loopTrigger();
                $(".add-new").removeAttr("disabled");
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
            $(document).on("change", ".repayAmount1", function () {
-             // var repaymentAmount = $(this).val();
              if (document.getElementById("Disbursement1").value) {
               var item= document.getElementById("RepaymentAmount1");
           
-           
-            //   let calculatedObj = amountCalculationExistPart(
-            //      document.getElementById("Disbursement1").value,
-            //      $(this).val(),
-            //      $(this).index(),
-            //      $(this).parents('tr').prev().children().find('input[type="date"]').val()
-            //    );
-            //    insertTableValue(calculatedObj,1);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
            $(document).on("change", ".repayAmount2", function () {
-             // var repaymentAmount = $(this).val();
              if (document.getElementById("Disbursement2").value) {
-            //   let calculatedObj= amountCalculationExistPart(
-            //      document.getElementById("Disbursement2").value,
-            //      $(this).val(),
-            //      $(this).index(),
-            //      $(this).parents('tr').prev().children().find('input[type="date"]').val()
-            //    );
-         
-            //    insertTableValue(calculatedObj,2);
-            //    $(".add-new").removeAttr("disabled");
+            
                loopTrigger();
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
            $(document).on("change", ".repayAmount3", function () {
-             // var repaymentAmount = $(this).val();
              if (document.getElementById("Disbursement3").value) {
               
-               // let calculatedObj=amountCalculationExistPart(
-               //   document.getElementById("Disbursement3").value,
-               //   $(this).val(),
-               //   $(this).index(),
-               //   $(this).parents('tr').prev().children().find('input[type="date"]').val()
-               // );
-         
-               // insertTableValue(calculatedObj,3);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
              } else {
@@ -597,55 +474,29 @@
            $(document).on("change", ".date1", function () {
              if (document.getElementById("RepaymentAmount1").value) {
          
-               // let calculatedObj=amountCalculationExistPart(
-               //   $(this).val(),
-               //   document.getElementById("RepaymentAmount1").value,
-               //   0,
-               //   $(this).parents('tr').prev().children().find('input[type="date"]').val()
-               // );
-               // insertTableValue(calculatedObj,1);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
          
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
            $(document).on("change", ".date2", function () {
-             // var repaymentAmount = $(this).val();
              if (document.getElementById("RepaymentAmount2").value) {
-               // $(".add-new").removeAttr("disabled");
-            //   let calculatedObj= amountCalculationExistPart(
-            //      $(this).val(),
-            //      document.getElementById("RepaymentAmount2").value,
-            //      1,
-            //      $(this).parents('tr').prev().children().find('input[type="date"]').val()
-            //    );
-            //    insertTableValue(calculatedObj,2);
                $(".add-new").removeAttr("disabled");
                loopTrigger();
              } else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
            $(document).on("change", ".date3", function () {
              if (document.getElementById("RepaymentAmount3").value) {
-            //   let calculatedObj= amountCalculationExistPart(
-            //      $(this).val(),
-            //      document.getElementById("RepaymentAmount3").value,
-            //    2,
-            //    $(this).parents('tr').prev().children().find('input[type="date"]').val()
-            //    );
-            //    insertTableValue(calculatedObj,3);
                loopTrigger();
                $(".add-new").removeAttr("disabled");
              } 
              else {
                $(".add-new").attr("disabled", "disabled");
              }
-             // $(this).attr("disabled", "disabled");
            });
          });
          
@@ -664,9 +515,7 @@
          document.getElementById("Disbursement1").valueAsDate = date.addDays(6);
          document.getElementById("Disbursement2").valueAsDate = date.addDays(11);
          document.getElementById("Disbursement3").valueAsDate = date.addDays(16);
-         // document.getElementById("RepaymentAmount1").value = sessionStorage.getItem("Principal")*0.25;
-         // document.getElementById("RepaymentAmount2").value = sessionStorage.getItem("Principal")*0.50;
-         // document.getElementById("RepaymentAmount3").value = sessionStorage.getItem("Principal")*0.75;
+        
          var principalInput=document.getElementById("Principal");
          var interestInput = document.getElementById("Interest");
          var tensureInput = document.getElementById("Tensure");
@@ -680,21 +529,7 @@
          disbursementInput.setAttribute('disabled','');
          submitInput.setAttribute('disabled','');
           loopTrigger();
-         // insertTableValue(amountCalculationExistPart(
-         // document.getElementById("Disbursement1").value,
-         // sessionStorage.getItem("Principal")*0.25,
-         //         0
-         //       ),1);
-         //       insertTableValue(amountCalculationExistPart(
-         // document.getElementById("Disbursement2").value,
-         //         document.getElementById("RepaymentAmount2").value,
-         //         1
-         //       ),2);
-         //       insertTableValue(amountCalculationExistPart(
-         // document.getElementById("Disbursement3").value,
-         //         document.getElementById("RepaymentAmount3").value,
-         //         2
-         //       ),3);
+        
          
          }
          function resetFunction(){
@@ -797,9 +632,6 @@
                         ></input>
                   </div>
                   <div class="col-sm-2">
-                     <!-- <button type="button" class="btn btn-info bg-success">
-                        <i class="fa fa-spin"></i> Reset
-                        </button> -->
                      <input type="button" id="ResetInput" value="Reset" class="btn btn-success h2" onclick="resetFunction()" disabled/>
                   </div>
                </div>
